@@ -5,7 +5,7 @@ import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import dynamic from 'next/dynamic';
 import type { ReactNode } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const ErudaProvider = dynamic(
   () => import('@/providers/Eruda').then((c) => c.ErudaProvider),
@@ -19,11 +19,14 @@ interface ClientProvidersProps {
 }
 
 function MiniKitInitializer({ children }: { children: ReactNode }) {
+  const [isInitialized, setIsInitialized] = useState(false);
+
   useEffect(() => {
     const initMiniKit = async () => {
       try {
         await MiniKit.install();
         console.log('MiniKit initialized successfully');
+        setIsInitialized(true);
       } catch (error) {
         console.error('Failed to initialize MiniKit:', error);
       }
@@ -31,6 +34,10 @@ function MiniKitInitializer({ children }: { children: ReactNode }) {
 
     initMiniKit();
   }, []);
+
+  if (!isInitialized) {
+    return <div>Loading MiniKit...</div>;
+  }
 
   return <>{children}</>;
 }
