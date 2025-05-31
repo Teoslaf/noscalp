@@ -1,0 +1,1482 @@
+[
+  {
+    "event_name": "Festival Weekender #1",
+    "description": "**Festival Weekender #1**\n\nJoin us for an inspiring festival packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Festival",
+    "start_datetime": "2025-11-11T10:00:00+00:00",
+    "end_datetime": "2025-11-11T12:00:00+00:00",
+    "time_zone": "America/New_York",
+    "venue_or_online": "501 Market St, San Francisco, CA",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 114,
+        "quantity": 89,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 129,
+        "quantity": 231,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "EUR",
+    "organizer": {
+      "name": "Acme Events",
+      "email": "contact@acmeevents.com",
+      "phone": "+1-555-210-0001"
+    },
+    "advanced_options": {
+      "capacity": 320,
+      "registration_required": true,
+      "tags": [
+        "festival",
+        "2025",
+        "weekender"
+      ],
+      "language": "English"
+    },
+    "banner": "/images/events/festival.jpg"
+  },
+  {
+    "event_name": "Networking Weekender #2",
+    "description": "**Networking Weekender #2**\n\nJoin us for an inspiring networking packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Networking",
+    "start_datetime": "2025-06-24T12:00:00+00:00",
+    "end_datetime": "2025-06-24T17:00:00+00:00",
+    "time_zone": "Asia/Tokyo",
+    "venue_or_online": "Harbour Convention Centre, Sydney, AU",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 103,
+        "quantity": 109,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 147,
+        "quantity": 187,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "USD",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 296,
+      "registration_required": true,
+      "tags": [
+        "networking",
+        "2025",
+        "weekender"
+      ],
+      "language": "Japanese"
+    },
+    "banner": "/images/events/networking.jpg"
+  },
+  {
+    "event_name": "Hackathon Series #3",
+    "description": "**Hackathon Series #3**\n\nJoin us for an inspiring hackathon packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Hackathon",
+    "start_datetime": "2025-06-02T21:00:00+00:00",
+    "end_datetime": "2025-06-03T01:00:00+00:00",
+    "time_zone": "America/Los_Angeles",
+    "venue_or_online": "501 Market St, San Francisco, CA",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 33,
+        "quantity": 31,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 67,
+        "quantity": 104,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "GBP",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 135,
+      "registration_required": true,
+      "tags": [
+        "hackathon",
+        "2025",
+        "series"
+      ],
+      "language": "Japanese"
+    },
+    "banner": "/images/events/hackathon.JPG"
+  },
+  {
+    "event_name": "Seminar Showcase #4",
+    "description": "**Seminar Showcase #4**\n\nJoin us for an inspiring seminar packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Seminar",
+    "start_datetime": "2025-11-02T13:00:00+00:00",
+    "end_datetime": "2025-11-02T15:00:00+00:00",
+    "time_zone": "Asia/Tokyo",
+    "venue_or_online": "The Grand Hall, London, UK",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 57,
+        "quantity": 100,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 106,
+        "quantity": 300,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "USD",
+    "organizer": {
+      "name": "Acme Events",
+      "email": "contact@acmeevents.com",
+      "phone": "+1-555-210-0001"
+    },
+    "advanced_options": {
+      "capacity": 400,
+      "registration_required": true,
+      "tags": [
+        "seminar",
+        "2025",
+        "showcase"
+      ],
+      "language": "Czech"
+    },
+    "banner": "/images/events/seminar.jpg"
+  },
+  {
+    "event_name": "Concert Summit #5",
+    "description": "**Concert Summit #5**\n\nJoin us for an inspiring concert packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Concert",
+    "start_datetime": "2025-11-28T10:00:00+00:00",
+    "end_datetime": "2025-11-28T12:00:00+00:00",
+    "time_zone": "America/Los_Angeles",
+    "venue_or_online": "Central Park Amphitheater, New York, NY",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 68,
+        "quantity": 55,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 107,
+        "quantity": 242,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 179,
+        "quantity": 33,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "USD",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 330,
+      "registration_required": true,
+      "tags": [
+        "concert",
+        "2025",
+        "summit"
+      ],
+      "language": "Japanese"
+    },
+    "banner": "/images/events/concert.jpg"
+  },
+  {
+    "event_name": "Workshop Expo #6",
+    "description": "**Workshop Expo #6**\n\nJoin us for an inspiring workshop packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Workshop",
+    "start_datetime": "2025-07-24T19:00:00+00:00",
+    "end_datetime": "2025-07-25T01:00:00+00:00",
+    "time_zone": "Asia/Tokyo",
+    "venue_or_online": "501 Market St, San Francisco, CA",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 79,
+        "quantity": 68,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 106,
+        "quantity": 243,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 205,
+        "quantity": 53,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "CZK",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 364,
+      "registration_required": true,
+      "tags": [
+        "workshop",
+        "2025",
+        "expo"
+      ],
+      "language": "Japanese"
+    },
+    "banner": "/images/events/workshop.jpg"
+  },
+  {
+    "event_name": "Meetup Showcase #7",
+    "description": "**Meetup Showcase #7**\n\nJoin us for an inspiring meetup packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Meetup",
+    "start_datetime": "2025-06-15T12:00:00+00:00",
+    "end_datetime": "2025-06-15T14:00:00+00:00",
+    "time_zone": "Europe/London",
+    "venue_or_online": "123 Innovation Drive, Prague, CZ",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 111,
+        "quantity": 60,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 134,
+        "quantity": 247,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "GBP",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 307,
+      "registration_required": true,
+      "tags": [
+        "meetup",
+        "2025",
+        "showcase"
+      ],
+      "language": "Spanish"
+    },
+    "banner": "/images/events/meetup.jpg"
+  },
+  {
+    "event_name": "Concert Weekender #8",
+    "description": "**Concert Weekender #8**\n\nJoin us for an inspiring concert packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Concert",
+    "start_datetime": "2025-07-07T13:00:00+00:00",
+    "end_datetime": "2025-07-07T17:00:00+00:00",
+    "time_zone": "Australia/Sydney",
+    "venue_or_online": "Harbour Convention Centre, Sydney, AU",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 94,
+        "quantity": 74,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 141,
+        "quantity": 182,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "JPY",
+    "organizer": {
+      "name": "NextGen Conferences",
+      "email": "info@nextgenconf.io",
+      "phone": "+1-415-555-3020"
+    },
+    "advanced_options": {
+      "capacity": 256,
+      "registration_required": true,
+      "tags": [
+        "concert",
+        "2025",
+        "weekender"
+      ],
+      "language": "Czech"
+    },
+    "banner": "/images/events/concert.jpg"
+  },
+  {
+    "event_name": "Conference Weekender #9",
+    "description": "**Conference Weekender #9**\n\nJoin us for an inspiring conference packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Conference",
+    "start_datetime": "2025-10-09T16:00:00+00:00",
+    "end_datetime": "2025-10-09T19:00:00+00:00",
+    "time_zone": "Europe/Prague",
+    "venue_or_online": "Akihabara Plaza, Tokyo, JP",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 74,
+        "quantity": 96,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 88,
+        "quantity": 178,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "EUR",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 274,
+      "registration_required": true,
+      "tags": [
+        "conference",
+        "2025",
+        "weekender"
+      ],
+      "language": "Spanish"
+    },
+    "banner": "/images/events/conference.jpg"
+  },
+  {
+    "event_name": "Conference Weekender #10",
+    "description": "**Conference Weekender #10**\n\nJoin us for an inspiring conference packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Conference",
+    "start_datetime": "2025-10-14T13:00:00+00:00",
+    "end_datetime": "2025-10-14T23:00:00+00:00",
+    "time_zone": "Australia/Sydney",
+    "venue_or_online": "123 Innovation Drive, Prague, CZ",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 63,
+        "quantity": 34,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 91,
+        "quantity": 191,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "CZK",
+    "organizer": {
+      "name": "NextGen Conferences",
+      "email": "info@nextgenconf.io",
+      "phone": "+1-415-555-3020"
+    },
+    "advanced_options": {
+      "capacity": 225,
+      "registration_required": true,
+      "tags": [
+        "conference",
+        "2025",
+        "weekender"
+      ],
+      "language": "English"
+    },
+    "banner": "/images/events/conference.jpg"
+  },
+  {
+    "event_name": "Networking Expo #11",
+    "description": "**Networking Expo #11**\n\nJoin us for an inspiring networking packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Networking",
+    "start_datetime": "2025-08-07T17:00:00+00:00",
+    "end_datetime": "2025-08-07T21:00:00+00:00",
+    "time_zone": "Europe/Prague",
+    "venue_or_online": "https://example.com/event/11",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 67,
+        "quantity": 117,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 87,
+        "quantity": 218,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 137,
+        "quantity": 48,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "CZK",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 383,
+      "registration_required": true,
+      "tags": [
+        "networking",
+        "2025",
+        "expo"
+      ],
+      "language": "Japanese"
+    },
+    "banner": "/images/events/networking.jpg"
+  },
+  {
+    "event_name": "Meetup Showcase #12",
+    "description": "**Meetup Showcase #12**\n\nJoin us for an inspiring meetup packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Meetup",
+    "start_datetime": "2025-10-04T09:00:00+00:00",
+    "end_datetime": "2025-10-04T12:00:00+00:00",
+    "time_zone": "America/Los_Angeles",
+    "venue_or_online": "123 Innovation Drive, Prague, CZ",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 30,
+        "quantity": 30,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 86,
+        "quantity": 204,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 132,
+        "quantity": 18,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "EUR",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 252,
+      "registration_required": true,
+      "tags": [
+        "meetup",
+        "2025",
+        "showcase"
+      ],
+      "language": "Spanish"
+    },
+    "banner": "/images/events/meetup.jpg"
+  },
+  {
+    "event_name": "Networking Weekender #13",
+    "description": "**Networking Weekender #13**\n\nJoin us for an inspiring networking packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Networking",
+    "start_datetime": "2025-10-19T11:00:00+00:00",
+    "end_datetime": "2025-10-19T17:00:00+00:00",
+    "time_zone": "Asia/Tokyo",
+    "venue_or_online": "501 Market St, San Francisco, CA",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 59,
+        "quantity": 71,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 111,
+        "quantity": 246,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "AUD",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 317,
+      "registration_required": true,
+      "tags": [
+        "networking",
+        "2025",
+        "weekender"
+      ],
+      "language": "Spanish"
+    },
+    "banner": "/images/events/networking.jpg"
+  },
+  {
+    "event_name": "Workshop Showcase #14",
+    "description": "**Workshop Showcase #14**\n\nJoin us for an inspiring workshop packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Workshop",
+    "start_datetime": "2025-07-01T12:00:00+00:00",
+    "end_datetime": "2025-07-01T17:00:00+00:00",
+    "time_zone": "America/Los_Angeles",
+    "venue_or_online": "Harbour Convention Centre, Sydney, AU",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 48,
+        "quantity": 20,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 62,
+        "quantity": 261,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 176,
+        "quantity": 14,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "USD",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 295,
+      "registration_required": true,
+      "tags": [
+        "workshop",
+        "2025",
+        "showcase"
+      ],
+      "language": "English"
+    },
+    "banner": "/images/events/workshop.jpg"
+  },
+  {
+    "event_name": "Concert Showcase #15",
+    "description": "**Concert Showcase #15**\n\nJoin us for an inspiring concert packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Concert",
+    "start_datetime": "2025-08-24T10:00:00+00:00",
+    "end_datetime": "2025-08-24T20:00:00+00:00",
+    "time_zone": "America/Los_Angeles",
+    "venue_or_online": "The Grand Hall, London, UK",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 36,
+        "quantity": 112,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 82,
+        "quantity": 227,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "CZK",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 339,
+      "registration_required": true,
+      "tags": [
+        "concert",
+        "2025",
+        "showcase"
+      ],
+      "language": "Spanish"
+    },
+    "banner": "/images/events/concert.jpg"
+  },
+  {
+    "event_name": "Workshop 2025 #16",
+    "description": "**Workshop 2025 #16**\n\nJoin us for an inspiring workshop packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Workshop",
+    "start_datetime": "2025-09-13T12:00:00+00:00",
+    "end_datetime": "2025-09-13T15:00:00+00:00",
+    "time_zone": "Australia/Sydney",
+    "venue_or_online": "https://example.com/event/16",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 79,
+        "quantity": 113,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 92,
+        "quantity": 252,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 174,
+        "quantity": 13,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "AUD",
+    "organizer": {
+      "name": "Global Gatherings",
+      "email": "support@globalgatherings.org",
+      "phone": "+81-3-1234-5678"
+    },
+    "advanced_options": {
+      "capacity": 378,
+      "registration_required": true,
+      "tags": [
+        "workshop",
+        "2025",
+        "2025"
+      ],
+      "language": "Spanish"
+    },
+    "banner": "/images/events/workshop.jpg"
+  },
+  {
+    "event_name": "Concert Expo #17",
+    "description": "**Concert Expo #17**\n\nJoin us for an inspiring concert packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Concert",
+    "start_datetime": "2025-08-26T21:00:00+00:00",
+    "end_datetime": "2025-08-27T00:00:00+00:00",
+    "time_zone": "America/New_York",
+    "venue_or_online": "Harbour Convention Centre, Sydney, AU",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 74,
+        "quantity": 43,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 101,
+        "quantity": 198,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "EUR",
+    "organizer": {
+      "name": "Global Gatherings",
+      "email": "support@globalgatherings.org",
+      "phone": "+81-3-1234-5678"
+    },
+    "advanced_options": {
+      "capacity": 241,
+      "registration_required": true,
+      "tags": [
+        "concert",
+        "2025",
+        "expo"
+      ],
+      "language": "English"
+    },
+    "banner": "/images/events/concert.jpg"
+  },
+  {
+    "event_name": "Workshop Summit #18",
+    "description": "**Workshop Summit #18**\n\nJoin us for an inspiring workshop packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Workshop",
+    "start_datetime": "2025-09-22T21:00:00+00:00",
+    "end_datetime": "2025-09-23T07:00:00+00:00",
+    "time_zone": "Europe/Prague",
+    "venue_or_online": "Harbour Convention Centre, Sydney, AU",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 116,
+        "quantity": 50,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 136,
+        "quantity": 184,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "CZK",
+    "organizer": {
+      "name": "Acme Events",
+      "email": "contact@acmeevents.com",
+      "phone": "+1-555-210-0001"
+    },
+    "advanced_options": {
+      "capacity": 234,
+      "registration_required": true,
+      "tags": [
+        "workshop",
+        "2025",
+        "summit"
+      ],
+      "language": "Czech"
+    },
+    "banner": "/images/events/workshop.jpg"
+  },
+  {
+    "event_name": "Hackathon Series #19",
+    "description": "**Hackathon Series #19**\n\nJoin us for an inspiring hackathon packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Hackathon",
+    "start_datetime": "2025-09-11T09:00:00+00:00",
+    "end_datetime": "2025-09-11T13:00:00+00:00",
+    "time_zone": "Europe/Prague",
+    "venue_or_online": "https://example.com/event/19",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 74,
+        "quantity": 109,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 130,
+        "quantity": 280,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 268,
+        "quantity": 19,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "AUD",
+    "organizer": {
+      "name": "Global Gatherings",
+      "email": "support@globalgatherings.org",
+      "phone": "+81-3-1234-5678"
+    },
+    "advanced_options": {
+      "capacity": 408,
+      "registration_required": true,
+      "tags": [
+        "hackathon",
+        "2025",
+        "series"
+      ],
+      "language": "Czech"
+    },
+    "banner": "/images/events/hackathon.JPG"
+  },
+  {
+    "event_name": "Exhibition Summit #20",
+    "description": "**Exhibition Summit #20**\n\nJoin us for an inspiring exhibition packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Exhibition",
+    "start_datetime": "2025-08-15T12:00:00+00:00",
+    "end_datetime": "2025-08-15T14:00:00+00:00",
+    "time_zone": "Australia/Sydney",
+    "venue_or_online": "123 Innovation Drive, Prague, CZ",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 26,
+        "quantity": 94,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 66,
+        "quantity": 208,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 136,
+        "quantity": 13,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "JPY",
+    "organizer": {
+      "name": "NextGen Conferences",
+      "email": "info@nextgenconf.io",
+      "phone": "+1-415-555-3020"
+    },
+    "advanced_options": {
+      "capacity": 315,
+      "registration_required": true,
+      "tags": [
+        "exhibition",
+        "2025",
+        "summit"
+      ],
+      "language": "English"
+    },
+    "banner": "/images/events/festival.jpg"
+  },
+  {
+    "event_name": "Concert Showcase #21",
+    "description": "**Concert Showcase #21**\n\nJoin us for an inspiring concert packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Concert",
+    "start_datetime": "2025-07-18T10:00:00+00:00",
+    "end_datetime": "2025-07-18T13:00:00+00:00",
+    "time_zone": "Europe/London",
+    "venue_or_online": "Harbour Convention Centre, Sydney, AU",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 96,
+        "quantity": 25,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 145,
+        "quantity": 100,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "USD",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 125,
+      "registration_required": true,
+      "tags": [
+        "concert",
+        "2025",
+        "showcase"
+      ],
+      "language": "Japanese"
+    },
+    "banner": "/images/events/concert.jpg"
+  },
+  {
+    "event_name": "Concert 2025 #22",
+    "description": "**Concert 2025 #22**\n\nJoin us for an inspiring concert packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Concert",
+    "start_datetime": "2025-08-06T12:00:00+00:00",
+    "end_datetime": "2025-08-06T19:00:00+00:00",
+    "time_zone": "America/Los_Angeles",
+    "venue_or_online": "501 Market St, San Francisco, CA",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 60,
+        "quantity": 116,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 74,
+        "quantity": 82,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "AUD",
+    "organizer": {
+      "name": "NextGen Conferences",
+      "email": "info@nextgenconf.io",
+      "phone": "+1-415-555-3020"
+    },
+    "advanced_options": {
+      "capacity": 198,
+      "registration_required": true,
+      "tags": [
+        "concert",
+        "2025",
+        "2025"
+      ],
+      "language": "English"
+    },
+    "banner": "/images/events/concert.jpg"
+  },
+  {
+    "event_name": "Networking Expo #23",
+    "description": "**Networking Expo #23**\n\nJoin us for an inspiring networking packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Networking",
+    "start_datetime": "2025-06-19T17:00:00+00:00",
+    "end_datetime": "2025-06-19T22:00:00+00:00",
+    "time_zone": "America/Los_Angeles",
+    "venue_or_online": "https://example.com/event/23",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 67,
+        "quantity": 56,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 87,
+        "quantity": 192,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 214,
+        "quantity": 49,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "EUR",
+    "organizer": {
+      "name": "Acme Events",
+      "email": "contact@acmeevents.com",
+      "phone": "+1-555-210-0001"
+    },
+    "advanced_options": {
+      "capacity": 297,
+      "registration_required": true,
+      "tags": [
+        "networking",
+        "2025",
+        "expo"
+      ],
+      "language": "English"
+    },
+    "banner": "/images/events/networking.jpg"
+  },
+  {
+    "event_name": "Workshop Weekender #24",
+    "description": "**Workshop Weekender #24**\n\nJoin us for an inspiring workshop packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Workshop",
+    "start_datetime": "2025-11-18T17:00:00+00:00",
+    "end_datetime": "2025-11-18T23:00:00+00:00",
+    "time_zone": "America/New_York",
+    "venue_or_online": "123 Innovation Drive, Prague, CZ",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 90,
+        "quantity": 39,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 117,
+        "quantity": 152,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 247,
+        "quantity": 23,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "GBP",
+    "organizer": {
+      "name": "Acme Events",
+      "email": "contact@acmeevents.com",
+      "phone": "+1-555-210-0001"
+    },
+    "advanced_options": {
+      "capacity": 214,
+      "registration_required": true,
+      "tags": [
+        "workshop",
+        "2025",
+        "weekender"
+      ],
+      "language": "Japanese"
+    },
+    "banner": "/images/events/workshop.jpg"
+  },
+  {
+    "event_name": "Conference Summit #25",
+    "description": "**Conference Summit #25**\n\nJoin us for an inspiring conference packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Conference",
+    "start_datetime": "2025-10-08T16:00:00+00:00",
+    "end_datetime": "2025-10-08T22:00:00+00:00",
+    "time_zone": "Europe/Prague",
+    "venue_or_online": "The Grand Hall, London, UK",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 20,
+        "quantity": 62,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 79,
+        "quantity": 113,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 157,
+        "quantity": 20,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "CZK",
+    "organizer": {
+      "name": "NextGen Conferences",
+      "email": "info@nextgenconf.io",
+      "phone": "+1-415-555-3020"
+    },
+    "advanced_options": {
+      "capacity": 195,
+      "registration_required": true,
+      "tags": [
+        "conference",
+        "2025",
+        "summit"
+      ],
+      "language": "Spanish"
+    },
+    "banner": "/images/events/conference.jpg"
+  },
+  {
+    "event_name": "Networking Showcase #26",
+    "description": "**Networking Showcase #26**\n\nJoin us for an inspiring networking packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Networking",
+    "start_datetime": "2025-10-20T20:00:00+00:00",
+    "end_datetime": "2025-10-21T04:00:00+00:00",
+    "time_zone": "Europe/Prague",
+    "venue_or_online": "123 Innovation Drive, Prague, CZ",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 24,
+        "quantity": 67,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 71,
+        "quantity": 221,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "USD",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 288,
+      "registration_required": true,
+      "tags": [
+        "networking",
+        "2025",
+        "showcase"
+      ],
+      "language": "Czech"
+    },
+    "banner": "/images/events/networking.jpg"
+  },
+  {
+    "event_name": "Conference Weekender #27",
+    "description": "**Conference Weekender #27**\n\nJoin us for an inspiring conference packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Conference",
+    "start_datetime": "2025-06-11T13:00:00+00:00",
+    "end_datetime": "2025-06-11T20:00:00+00:00",
+    "time_zone": "America/Los_Angeles",
+    "venue_or_online": "Akihabara Plaza, Tokyo, JP",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 33,
+        "quantity": 65,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 92,
+        "quantity": 223,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 207,
+        "quantity": 49,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "EUR",
+    "organizer": {
+      "name": "BlueSky Productions",
+      "email": "hello@blueskyprod.co",
+      "phone": "+44-20-7946-0958"
+    },
+    "advanced_options": {
+      "capacity": 337,
+      "registration_required": true,
+      "tags": [
+        "conference",
+        "2025",
+        "weekender"
+      ],
+      "language": "Czech"
+    },
+    "banner": "/images/events/conference.jpg"
+  },
+  {
+    "event_name": "Hackathon 2025 #28",
+    "description": "**Hackathon 2025 #28**\n\nJoin us for an inspiring hackathon packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Hackathon",
+    "start_datetime": "2025-07-31T11:00:00+00:00",
+    "end_datetime": "2025-07-31T15:00:00+00:00",
+    "time_zone": "Europe/Prague",
+    "venue_or_online": "Akihabara Plaza, Tokyo, JP",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 105,
+        "quantity": 114,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 130,
+        "quantity": 148,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "EUR",
+    "organizer": {
+      "name": "NextGen Conferences",
+      "email": "info@nextgenconf.io",
+      "phone": "+1-415-555-3020"
+    },
+    "advanced_options": {
+      "capacity": 262,
+      "registration_required": true,
+      "tags": [
+        "hackathon",
+        "2025",
+        "2025"
+      ],
+      "language": "English"
+    },
+    "banner": "/images/events/hackathon.JPG"
+  },
+  {
+    "event_name": "Concert Expo #29",
+    "description": "**Concert Expo #29**\n\nJoin us for an inspiring concert packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Concert",
+    "start_datetime": "2025-09-06T09:00:00+00:00",
+    "end_datetime": "2025-09-06T18:00:00+00:00",
+    "time_zone": "America/New_York",
+    "venue_or_online": "https://example.com/event/29",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 48,
+        "quantity": 23,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 100,
+        "quantity": 129,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      }
+    ],
+    "currency": "AUD",
+    "organizer": {
+      "name": "NextGen Conferences",
+      "email": "info@nextgenconf.io",
+      "phone": "+1-415-555-3020"
+    },
+    "advanced_options": {
+      "capacity": 152,
+      "registration_required": true,
+      "tags": [
+        "concert",
+        "2025",
+        "expo"
+      ],
+      "language": "Japanese"
+    },
+    "banner": "/images/events/concert.jpg"
+  },
+  {
+    "event_name": "Meetup Summit #30",
+    "description": "**Meetup Summit #30**\n\nJoin us for an inspiring meetup packed with industry experts, hands‑on sessions, and unparalleled networking opportunities.\n\n**Highlights**\n- Keynote presentations from international speakers\n- Interactive workshops\n- Live demos & product launches\n- After‑hours social events\n",
+    "category": "Meetup",
+    "start_datetime": "2025-06-18T21:00:00+00:00",
+    "end_datetime": "2025-06-19T03:00:00+00:00",
+    "time_zone": "Australia/Sydney",
+    "venue_or_online": "The Grand Hall, London, UK",
+    "ticket_types": [
+      {
+        "type": "Early Bird",
+        "price": 34,
+        "quantity": 53,
+        "benefits": [
+          "Access to all sessions",
+          "Digital swag bag"
+        ]
+      },
+      {
+        "type": "Regular",
+        "price": 55,
+        "quantity": 228,
+        "benefits": [
+          "Access to all sessions"
+        ]
+      },
+      {
+        "type": "VIP",
+        "price": 171,
+        "quantity": 12,
+        "benefits": [
+          "Front‑row seating",
+          "Speaker meet & greet",
+          "Exclusive merch"
+        ]
+      }
+    ],
+    "currency": "JPY",
+    "organizer": {
+      "name": "NextGen Conferences",
+      "email": "info@nextgenconf.io",
+      "phone": "+1-415-555-3020"
+    },
+    "advanced_options": {
+      "capacity": 293,
+      "registration_required": true,
+      "tags": [
+        "meetup",
+        "2025",
+        "summit"
+      ],
+      "language": "English"
+    },
+    "banner": "/images/events/meetup.jpg"
+  }
+]
