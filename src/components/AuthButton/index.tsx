@@ -1,68 +1,53 @@
 'use client';
-import { walletAuth } from '@/auth/wallet';
 import { Button, LiveFeedback } from '@worldcoin/mini-apps-ui-kit-react';
-import { useMiniKit } from '@worldcoin/minikit-js/minikit-provider';
-import { useCallback, useEffect, useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useCallback, useState } from 'react';
 
 /**
- * This component is an example of how to authenticate a user
- * We will use Next Auth for this example, but you can use any auth provider
- * Read More: https://docs.world.org/mini-apps/commands/wallet-auth
+ * This component handles both World ID verification and wallet authentication
+ * World ID verification must be completed before wallet authentication
  */
 export const AuthButton = () => {
   const [isPending, setIsPending] = useState(false);
-  const [hasAttemptedAuth, setHasAttemptedAuth] = useState(false);
-  const { isInstalled } = useMiniKit();
+  const [error, setError] = useState<string | null>(null);
 
-  const onClick = useCallback(async () => {
-    if (!isInstalled || isPending) {
-      return;
-    }
-    setIsPending(true);
+  const handleSignIn = useCallback(async () => {
     try {
-      await walletAuth();
+      setIsPending(true);
+      setError(null);
+      
+      // Sign in with World ID using OIDC
+      await signIn('worldid', { callbackUrl: '/home' });
     } catch (error) {
-      console.error('Wallet authentication button error', error);
+      console.error('Authentication error:', error);
+      setError('Authentication failed: Please try again');
     } finally {
       setIsPending(false);
     }
-  }, [isInstalled, isPending]);
-
-  useEffect(() => {
-    const authenticate = async () => {
-      if (isInstalled && !isPending && !hasAttemptedAuth) {
-        setIsPending(true);
-        try {
-          await walletAuth();
-          setHasAttemptedAuth(true);
-        } catch (error) {
-          console.error('Auto wallet authentication error', error);
-        } finally {
-          setIsPending(false);
-        }
-      }
-    };
-
-    authenticate();
-  }, [isInstalled, isPending, hasAttemptedAuth]);
+  }, []);
 
   return (
-    <LiveFeedback
-      label={{
-        failed: 'Failed to login',
-        pending: 'Logging in',
-        success: 'Logged in',
-      }}
-      state={isPending ? 'pending' : undefined}
-    >
-      <Button
-        onClick={onClick}
-        disabled={isPending}
-        size="lg"
-        variant="primary"
+    <div className="flex flex-col items-center gap-4">
+      <LiveFeedback
+        label={{
+          failed: 'Failed to authenticate',
+          pending: 'Verifying with World ID',
+          success: 'Authenticated',
+        }}
+        state={isPending ? 'pending' : undefined}
       >
-        Login with Wallet
-      </Button>
-    </LiveFeedback>
+        <Button
+          onClick={handleSignIn}
+          disabled={isPending}
+          size="lg"
+          variant="primary"
+        >
+          Sign in with World ID
+        </Button>
+      </LiveFeedback>
+      {error && (
+        <p className="text-sm text-red-500">{error}</p>
+      )}
+    </div>
   );
 };

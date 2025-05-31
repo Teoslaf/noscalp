@@ -6,6 +6,7 @@ import {
 } from '@worldcoin/minikit-js';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import type { OAuthConfig } from 'next-auth/providers';
 
 declare module 'next-auth' {
   interface User {
@@ -31,6 +32,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { strategy: 'jwt' },
   trustHost: true,
   providers: [
+    {
+      id: "worldid",
+      name: "World ID",
+      type: "oauth",
+      clientId: process.env.WORLDID_CLIENT_ID,
+      clientSecret: process.env.WORLDID_CLIENT_SECRET,
+      issuer: "https://id.worldcoin.org",
+      authorization: {
+        url: "https://id.worldcoin.org/authorize",
+        params: { 
+          scope: "openid",
+          response_type: "code"
+        }
+      },
+      token: "https://id.worldcoin.org/token",
+      userinfo: "https://id.worldcoin.org/userinfo",
+      client: {
+        token_endpoint_auth_method: "client_secret_post"
+      },
+      wellKnown: "https://id.worldcoin.org/.well-known/openid-configuration"
+    } as OAuthConfig<any>,
     Credentials({
       name: 'World App Wallet',
       credentials: {

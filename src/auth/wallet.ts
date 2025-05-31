@@ -14,6 +14,8 @@ export const walletAuth = async () => {
 
   try {
     const loginNonce = generateNonce();
+    console.log('Requesting wallet authentication...');
+    
     const { finalPayload } = await MiniKit.commandsAsync.walletAuth({
       nonce: loginNonce,
     });
@@ -22,8 +24,13 @@ export const walletAuth = async () => {
       throw new Error('Wallet authentication failed');
     }
 
-    // Here you would typically send this to your backend to verify
-    // and create a session
+    if (!finalPayload.address) {
+      throw new Error('No wallet address received');
+    }
+
+    console.log('Wallet authentication successful, verifying with server...');
+
+    // Send to backend to verify and create session
     const response = await fetch('/api/auth/wallet', {
       method: 'POST',
       headers: {
@@ -36,10 +43,13 @@ export const walletAuth = async () => {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to authenticate with server');
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to authenticate with server');
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log('Server verification successful');
+    return data;
   } catch (error) {
     console.error('Wallet authentication error:', error);
     throw error;
