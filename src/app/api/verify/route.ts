@@ -1,39 +1,45 @@
 import { NextResponse } from 'next/server'
-import { ISuccessResult } from '@worldcoin/idkit'
+import { verifyCloudProof, IVerifyResponse, MiniAppVerifyActionSuccessPayload } from '@worldcoin/minikit-js'
 
-const WORLD_ID_APP_ID = "app_f3477523033966cba3409a67092fad28"
+const WORLD_ID_APP_ID = "app_f3477523033966cba3409a67092fad28" as `app_${string}`
+
+interface IRequestPayload {
+  payload: MiniAppVerifyActionSuccessPayload
+  action: string
+  signal?: string
+}
 
 export async function POST(req: Request) {
   try {
-    const { payload, action } = await req.json()
+    const { payload, action, signal } = await req.json() as IRequestPayload
     
-    const verifyRes = await fetch(
-      `https://developer.worldcoin.org/api/v2/verify/${WORLD_ID_APP_ID}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          nullifier_hash: payload.nullifier_hash,
-          merkle_root: payload.merkle_root,
-          proof: payload.proof,
-          verification_level: payload.verification_level,
-          action: action
-        }),
-      }
-    )
+    if (payload.status !== 'success') {
+      throw new Error('Invalid proof status')
+    }
 
-    if (!verifyRes.ok) {
+    const verifyRes = await verifyCloudProof(
+      payload,
+      WORLD_ID_APP_ID,
+      action,
+      signal
+    ) as IVerifyResponse
+
+    if (!verifyRes.success) {
       throw new Error('Verification failed')
     }
 
-    const data = await verifyRes.json()
-    return NextResponse.json(data)
+    return NextResponse.json({ 
+      success: true,
+      verifyRes 
+    })
   } catch (error) {
     console.error('Error verifying proof:', error)
     return NextResponse.json(
-      { error: 'Invalid proof' },
+      { 
+        success: false,
+        error: 'Invalid proof', 
+        details: error instanceof Error ? error.message : 'Unknown error' 
+      },
       { status: 400 }
     )
   }

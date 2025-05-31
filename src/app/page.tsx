@@ -1,16 +1,13 @@
 'use client'
 
-import { ISuccessResult } from '@worldcoin/idkit'
+import { MiniKit, VerificationLevel, VerifyCommandInput, MiniAppVerifyActionSuccessPayload } from '@worldcoin/minikit-js'
 import { useState } from 'react'
-import { MiniKit, VerificationLevel } from '@worldcoin/minikit-js'
-
 
 // ✅ Constants — committed, no env needed
-const WORLD_ID_APP_ID = "app_f3477523033966cba3409a67092fad28"
 const WORLD_ID_ACTION = "buy_ticket"
 
 export default function Home() {
-  const [proof, setProof] = useState<ISuccessResult | null>(null)
+  const [proof, setProof] = useState<MiniAppVerifyActionSuccessPayload | null>(null)
   const [verified, setVerified] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isVerifying, setIsVerifying] = useState(false)
@@ -22,19 +19,20 @@ export default function Home() {
     setError(null)
 
     try {
-      const { finalPayload } = await MiniKit.commandsAsync.verify({
-        //app_id: WORLD_ID_APP_ID,
+      const verifyPayload: VerifyCommandInput = {
         action: WORLD_ID_ACTION,
         signal: 'user-wallet-address', // replace with real wallet address later
         verification_level: VerificationLevel.Device,
-      })
+      }
 
+      const { finalPayload } = await MiniKit.commandsAsync.verify(verifyPayload)
+      
       if (finalPayload.status === 'error') {
         throw new Error('Verification failed')
       }
 
       console.log('✅ Proof received:', finalPayload)
-      setProof(finalPayload as ISuccessResult)
+      setProof(finalPayload as MiniAppVerifyActionSuccessPayload)
       setVerified(true)
 
       const response = await fetch('/api/verify', {
@@ -45,6 +43,7 @@ export default function Home() {
         body: JSON.stringify({
           payload: finalPayload,
           action: WORLD_ID_ACTION,
+          signal: verifyPayload.signal,
         }),
       })
 
