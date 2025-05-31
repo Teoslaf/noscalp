@@ -2,6 +2,13 @@
 import { MiniKit } from '@worldcoin/minikit-js';
 import { useCallback, useState, useEffect } from 'react';
 
+// Extend Window interface for MiniKit
+declare global {
+  interface Window {
+    MiniKit?: typeof MiniKit;
+  }
+}
+
 /**
  * WorldID Wallet Authentication Component
  * Implements the official Wallet Auth flow from Mini Apps documentation
@@ -13,8 +20,28 @@ export const AuthButton = () => {
   const [isWorldApp, setIsWorldApp] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Check if we're in World App
-    setIsWorldApp(MiniKit.isInstalled());
+    // Check if we're in World App - now that MiniKit.install() is called in providers
+    const detectWorldApp = async () => {
+      try {
+        // Small delay to ensure MiniKit is ready
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Check MiniKit installation
+        const isInstalled = MiniKit.isInstalled();
+        
+        console.log('🔍 AuthButton World App Detection:');
+        console.log('- MiniKit.isInstalled():', isInstalled);
+        console.log('- User Agent:', navigator.userAgent);
+        console.log('- Has walletAuth method:', typeof MiniKit.commandsAsync?.walletAuth === 'function');
+        
+        setIsWorldApp(isInstalled);
+      } catch (error) {
+        console.error('Error detecting World App:', error);
+        setIsWorldApp(false);
+      }
+    };
+
+    detectWorldApp();
   }, []);
 
   const handleWorldIDAuth = useCallback(async () => {
@@ -179,6 +206,9 @@ export const AuthButton = () => {
             Checking World App...
           </div>
         </div>
+        <p className="text-small text-text-muted text-center">
+          Detecting MiniKit environment...
+        </p>
       </div>
     );
   }
@@ -214,6 +244,18 @@ export const AuthButton = () => {
   // Not in World App - show both options
   return (
     <div className="flex flex-col items-center gap-lg">
+      {/* Debug Information */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="bg-surface-secondary border border-border-muted rounded-lg p-sm w-full">
+          <h4 className="text-small font-medium text-text-primary mb-xs">Debug Info</h4>
+          <div className="text-small text-text-muted space-y-xs">
+            <div>MiniKit Installed: {MiniKit.isInstalled() ? '✅ Yes' : '❌ No'}</div>
+            <div>Has walletAuth: {typeof MiniKit.commandsAsync?.walletAuth === 'function' ? '✅ Yes' : '❌ No'}</div>
+            <div>User Agent: {navigator.userAgent.slice(0, 50)}...</div>
+          </div>
+        </div>
+      )}
+
       {/* World App Notice */}
       <div className="bg-surface-secondary border border-border-muted rounded-lg p-md w-full">
         <div className="flex items-start gap-sm">

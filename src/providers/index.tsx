@@ -1,4 +1,5 @@
 'use client';
+import { MiniKit } from '@worldcoin/minikit-js';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 
@@ -12,8 +13,35 @@ export default function ClientProviders({ children, session }: ClientProvidersPr
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Initialize any client-side setup here
-    setIsReady(true);
+    // Install MiniKit as per official documentation
+    const initializeMiniKit = async () => {
+      try {
+        // Check if we're in a browser environment
+        if (typeof window === 'undefined') {
+          setIsReady(true);
+          return;
+        }
+
+        // Install MiniKit - this is crucial for World App detection
+        MiniKit.install();
+        
+        // Wait a bit for MiniKit to fully initialize
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Log initialization details
+        console.log('🚀 MiniKit installed successfully');
+        console.log('📱 MiniKit.isInstalled():', MiniKit.isInstalled());
+        console.log('🌐 User Agent:', navigator.userAgent);
+        console.log('🔗 Location:', window.location.href);
+        
+        setIsReady(true);
+      } catch (error) {
+        console.error('❌ Error initializing MiniKit:', error);
+        setIsReady(true);
+      }
+    };
+
+    initializeMiniKit();
   }, []);
 
   if (!isReady) {
@@ -21,7 +49,7 @@ export default function ClientProviders({ children, session }: ClientProvidersPr
       <div className="min-h-screen flex items-center justify-center bg-bg-primary">
         <div className="text-center space-y-lg">
           <div className="w-12 h-12 border-4 border-primary-green border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-body text-text-secondary">Loading...</p>
+          <p className="text-body text-text-secondary">Initializing MiniKit...</p>
         </div>
       </div>
     );
