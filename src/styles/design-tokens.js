@@ -126,12 +126,12 @@ export const designTokens = {
     sm: '11px',             // 8pt
     md: '16px',             // 12pt
     lg: '21px',             // 16pt (section gaps)
-    xl: '0px',              // 20pt (screen padding) - REMOVED
+    xl: '27px',             // 20pt
     xxl: '32px',            // 24pt
     xxxl: '43px',           // 32pt
     
     // Layout Specific (converted from pt)
-    screenPadding: '0px',    // 20pt screen padding - REMOVED
+    screenPadding: '12px',   // 12px minimum screen padding for edge safety
     sectionGap: '21px',      // 16pt section gaps
     cardPadding: '21px',     // 16pt
     buttonPadding: '21px',   // 16pt horizontal padding

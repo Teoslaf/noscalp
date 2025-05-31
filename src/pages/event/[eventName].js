@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import eventsData from '../../data/events_prototype_no_imgs.json'
 import { getCategoryConfig, formatPrice } from '../../styles/design-tokens'
+import MarkdownRenderer from '../../components/MarkdownRenderer'
 
 export default function EventDetailPage() {
   const router = useRouter()
@@ -59,7 +60,7 @@ export default function EventDetailPage() {
       <div className="screen-container min-h-screen">
         {/* Top Bar */}
         <div className="nav-top fixed top-0 left-0 right-0 z-fixed bg-bg-primary bg-opacity-95 backdrop-blur-sm">
-          <div className="flex items-center justify-between h-full">
+          <div className="flex items-center justify-between h-full px-3">
             {/* Back Button */}
             <button 
               className="p-sm hover:bg-interactive-hover rounded-md transition-colors duration-fast"
@@ -92,8 +93,8 @@ export default function EventDetailPage() {
           </div>
         </div>
 
-        {/* Content */}
-        <div className="pt-top-bar-height">
+        {/* Event Content */}
+        <div className="pt-top-bar-height px-3">
           {/* Event Image */}
           <div className="relative w-full aspect-event-banner">
             <Image
@@ -126,14 +127,15 @@ export default function EventDetailPage() {
             </div>
 
             {/* Event Title and Basic Info */}
-            <div className="space-y-md">
+            <div className="space-y-lg">
               <h1 className="text-app-title font-bold text-text-primary">
                 {event.event_name}
               </h1>
               
-              <p className="text-body text-text-secondary leading-relaxed">
-                {event.description}
-              </p>
+              <MarkdownRenderer 
+                content={event.description}
+                className="prose-event-description"
+              />
             </div>
 
             {/* Event Info */}

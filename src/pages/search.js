@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import BottomNav from '../components/BottomNav'
+import MarkdownRenderer from '../components/MarkdownRenderer'
 import eventsData from '../data/events_prototype_no_imgs.json'
 import { getCategoryConfig, formatPrice } from '../styles/design-tokens'
 
@@ -94,9 +95,12 @@ export default function SearchPage() {
               </span>
             </div>
 
-            <p className="text-caption text-text-secondary line-clamp-2 mb-sm">
-              {event.description}
-            </p>
+            <div className="line-clamp-2 mb-sm">
+              <MarkdownRenderer 
+                content={event.description}
+                className="search-result-description text-caption text-text-secondary"
+              />
+            </div>
 
             <div className="flex items-center justify-between text-small text-text-muted">
               <div className="flex items-center gap-sm">
@@ -178,7 +182,7 @@ export default function SearchPage() {
       <div className="screen-container min-h-screen">
         {/* Top Bar */}
         <div className="nav-top fixed top-0 left-0 right-0 z-fixed">
-          <div className="flex items-center justify-between h-full">
+          <div className="flex items-center justify-between h-full px-3">
             {/* Back Button */}
             <button 
               className="p-sm hover:bg-interactive-hover rounded-md transition-colors duration-fast"
@@ -200,7 +204,7 @@ export default function SearchPage() {
         </div>
 
         {/* Content */}
-        <div className="pt-top-bar-height px-screen-padding pb-bottom-nav-height">
+        <div className="pt-top-bar-height px-3">
           {/* Search Bar */}
           <div className="section-gap">
             <div className="relative">

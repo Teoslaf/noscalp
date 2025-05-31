@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { designTokens, getCategoryConfig, formatPrice } from '../styles/design-tokens';
+import { extractPlainText } from '../utils/markdownUtils';
 
 /**
  * EventCard Component
@@ -86,6 +87,11 @@ const EventCard = ({ event, onClick }) => {
         <h3 className="text-body font-medium text-text-primary line-clamp-2">
           {event.event_name}
         </h3>
+
+        {/* Brief Description */}
+        <p className="text-caption text-text-muted line-clamp-2 mb-sm">
+          {extractPlainText(event.description, 120)}
+        </p>
 
         {/* Event Details */}
         <div className="space-y-xs">

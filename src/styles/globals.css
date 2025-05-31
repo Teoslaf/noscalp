@@ -65,6 +65,7 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
+    line-clamp: 1;
   }
 
   .line-clamp-2 {
@@ -72,6 +73,7 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 
   .line-clamp-3 {
@@ -79,6 +81,7 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
 }
 
@@ -90,6 +93,40 @@
   
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Edge safety utilities */
+  .safe-edge-padding {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+  .safe-edge-margin {
+    margin-left: max(12px, env(safe-area-inset-left));
+    margin-right: max(12px, env(safe-area-inset-right));
+  }
+
+  /* Ensure fixed elements respect edge safety */
+  .fixed-safe {
+    left: max(12px, env(safe-area-inset-left));
+    right: max(12px, env(safe-area-inset-right));
+  }
+
+  /* Markdown content styling */
+  .search-result-description .markdown-content > * {
+    margin-bottom: 0 !important;
+    font-size: inherit;
+    color: inherit;
+    line-height: inherit;
+  }
+
+  .search-result-description .markdown-content strong {
+    font-weight: 500;
+  }
+
+  /* Event detail page descriptions have natural spacing */
+  .prose-event-description .markdown-content h2:first-child {
+    margin-top: 0;
   }
 }
 

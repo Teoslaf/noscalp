@@ -5,7 +5,7 @@ export default function BottomNav({ activeTab = 'home' }) {
 
   return (
     <div className="nav-bottom fixed bottom-0 left-0 right-0 z-fixed">
-      <div className="flex items-center justify-around h-full">
+      <div className="flex items-center justify-around h-full px-3">
         {/* Home */}
         <button 
           className="flex flex-col items-center gap-xs p-sm group"

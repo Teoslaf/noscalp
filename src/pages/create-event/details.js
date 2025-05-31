@@ -141,7 +141,7 @@ export default function CreateEventStep3() {
       <div className="screen-container min-h-screen">
         {/* Top Bar */}
         <div className="nav-top fixed top-0 left-0 right-0 z-fixed">
-          <div className="flex items-center justify-between h-full">
+          <div className="flex items-center justify-between h-full px-3">
             {/* Back Button */}
             <button 
               className="p-sm hover:bg-interactive-hover rounded-md transition-colors duration-fast"
@@ -163,7 +163,7 @@ export default function CreateEventStep3() {
         </div>
 
         {/* Content */}
-        <div className="pt-top-bar-height px-screen-padding pb-xxxl">
+        <div className="pt-top-bar-height px-3">
           {/* Progress Indicator */}
           <div className="section-gap">
             <div className="flex items-center justify-between mb-sm">
@@ -201,7 +201,7 @@ export default function CreateEventStep3() {
                 />
                 <div className="flex justify-between items-center mt-xs">
                   <span className="text-small text-text-muted">
-                    Tell your story and attract attendees
+                    Supports Markdown formatting (**bold**, *italic*, - lists)
                   </span>
                   <span className="text-small text-text-muted">
                     {formData.description.length}/1000

@@ -128,7 +128,7 @@ export default function CreateEventStep4() {
 
   if (isSuccess) {
     return (
-      <div className="screen-container min-h-screen flex items-center justify-center px-screen-padding">
+      <div className="screen-container min-h-screen flex items-center justify-center px-3">
         <div className="text-center space-y-xl max-w-md">
           <div className="w-20 h-20 bg-primary-green rounded-full flex items-center justify-center mx-auto">
             <svg className="w-10 h-10 text-text-on-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -165,7 +165,7 @@ export default function CreateEventStep4() {
       <div className="screen-container min-h-screen">
         {/* Top Bar */}
         <div className="nav-top fixed top-0 left-0 right-0 z-fixed">
-          <div className="flex items-center justify-between h-full">
+          <div className="flex items-center justify-between h-full px-3">
             {/* Back Button */}
             <button 
               className="p-sm hover:bg-interactive-hover rounded-md transition-colors duration-fast"
@@ -188,7 +188,7 @@ export default function CreateEventStep4() {
         </div>
 
         {/* Content */}
-        <div className="pt-top-bar-height px-screen-padding pb-xxxl">
+        <div className="pt-top-bar-height px-3 pb-xxxl">
           {/* Progress Indicator */}
           <div className="section-gap">
             <div className="flex items-center justify-between mb-sm">

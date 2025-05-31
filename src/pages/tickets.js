@@ -162,7 +162,7 @@ export default function TicketsPage() {
       <div className="screen-container min-h-screen">
         {/* Top Bar */}
         <div className="nav-top fixed top-0 left-0 right-0 z-fixed">
-          <div className="flex items-center justify-between h-full">
+          <div className="flex items-center justify-between h-full px-3">
             {/* Back Button */}
             <button 
               className="p-sm hover:bg-interactive-hover rounded-md transition-colors duration-fast"
@@ -188,7 +188,7 @@ export default function TicketsPage() {
         </div>
 
         {/* Content */}
-        <div className="pt-top-bar-height pb-bottom-nav-height">
+        <div className="pt-top-bar-height px-3 pb-bottom-nav-height">
           {/* Tab Navigation */}
           <div className="section-gap">
             <div className="flex bg-bg-secondary rounded-button p-xs">
@@ -252,10 +252,11 @@ export default function TicketsPage() {
                     onClick={() => handleTicketClick(ticket)}
                     className="card-primary cursor-pointer hover:scale-105 transition-transform duration-fast"
                   >
-                    <div className="flex gap-lg">
+                    {/* Vertical layout: image on top, info below */}
+                    <div className="space-y-lg">
                       {/* NFT Image */}
-                      <div className="relative flex-shrink-0">
-                        <div className="w-24 h-24 rounded-md overflow-hidden bg-bg-tertiary">
+                      <div className="relative">
+                        <div className="w-full aspect-square rounded-md overflow-hidden bg-bg-tertiary">
                           <img
                             src={ticket.nftImage}
                             alt={`${ticket.eventName} NFT`}
@@ -264,22 +265,22 @@ export default function TicketsPage() {
                         </div>
                         
                         {/* Category Badge */}
-                        <div className={`absolute top-xs right-xs ${getCategoryColor(ticket.category)} text-white px-xs py-0.5 rounded text-small`}>
+                        <div className={`absolute top-sm right-sm ${getCategoryColor(ticket.category)} text-white px-sm py-xs rounded text-small font-medium`}>
                           NFT
                         </div>
 
                         {/* Quantity Badge */}
                         {ticket.quantity > 1 && (
-                          <div className="absolute top-xs left-xs bg-text-primary text-bg-primary px-xs py-0.5 rounded-full text-small font-bold">
+                          <div className="absolute top-sm left-sm bg-text-primary text-bg-primary px-sm py-xs rounded-full text-small font-bold">
                             {ticket.quantity}x
                           </div>
                         )}
                       </div>
 
                       {/* Ticket Info */}
-                      <div className="flex-1 min-w-0 space-y-sm">
+                      <div className="space-y-md">
                         <div>
-                          <h3 className="text-body font-bold text-text-primary mb-xs line-clamp-1">
+                          <h3 className="text-body font-bold text-text-primary mb-xs line-clamp-2">
                             {ticket.eventName}
                           </h3>
                           <p className="text-caption text-text-secondary">
@@ -287,18 +288,18 @@ export default function TicketsPage() {
                           </p>
                         </div>
 
-                        <div className="space-y-xs">
-                          <div className="flex items-center gap-xs">
-                            <svg className="w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        <div className="space-y-sm">
+                          <div className="flex items-center gap-sm">
+                            <svg className="w-4 h-4 text-text-muted flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <span className="text-small text-text-secondary">
                               {formatDate(ticket.date, ticket.time)}
                             </span>
                           </div>
 
-                          <div className="flex items-center gap-xs">
-                            <svg className="w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <div className="flex items-center gap-sm">
+                            <svg className="w-4 h-4 text-text-muted flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
@@ -309,7 +310,7 @@ export default function TicketsPage() {
                         </div>
 
                         {/* Price and Status */}
-                        <div className="flex items-center justify-between pt-xs border-t border-border-secondary">
+                        <div className="flex items-center justify-between pt-sm border-t border-border-secondary">
                           <span className="text-caption font-medium text-primary-green">
                             {ticket.originalPrice === 0 ? 'Free' : `$${ticket.originalPrice}`}
                           </span>

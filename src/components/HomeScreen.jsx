@@ -96,7 +96,7 @@ const HomeScreen = () => {
     <div className="screen-container min-h-screen">
       {/* Top Bar - App Name (left) and Settings (right) */}
       <div className="nav-top fixed top-0 left-0 right-0 z-fixed">
-        <div className="flex items-center justify-between h-full">
+        <div className="flex items-center justify-between h-full px-3">
           {/* App Name (Left) */}
           <h1 className="text-app-title font-bold text-text-primary">
             Noscalp
@@ -119,7 +119,7 @@ const HomeScreen = () => {
       <div className="pt-top-bar-height">
         {/* Filters Bar - Location, Date, Category */}
         <div className="filter-bar fixed top-top-bar-height left-0 right-0 z-sticky bg-bg-secondary border-b border-border-primary">
-          <div className="flex items-center gap-md h-full overflow-x-auto scrollbar-hide">
+          <div className="flex items-center gap-md h-full overflow-x-auto scrollbar-hide px-3">
             {/* Location Filter */}
             <select
               value={selectedLocation}
@@ -178,7 +178,7 @@ const HomeScreen = () => {
         </div>
 
         {/* Content with top padding for filters */}
-        <div className="pt-filter-bar-height px-screen-padding">
+        <div className="pt-filter-bar-height px-3">
           {/* Section Header */}
           <div className="section-gap">
             <div className="flex items-center justify-between">

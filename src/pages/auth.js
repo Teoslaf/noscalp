@@ -26,7 +26,7 @@ export default function AuthPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
       </Head>
       
-      <div className="screen-container min-h-screen flex flex-col justify-center items-center px-screen-padding bg-bg-primary">
+      <div className="screen-container min-h-screen flex flex-col justify-center items-center px-3 bg-bg-primary">
         {/* App Logo - Center of page */}
         <div className="flex-1 flex flex-col justify-center items-center">
           <div className="mb-xxxl text-center">
