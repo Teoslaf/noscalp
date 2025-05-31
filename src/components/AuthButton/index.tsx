@@ -29,10 +29,7 @@ export const AuthButton = () => {
         // Check MiniKit installation
         const isInstalled = MiniKit.isInstalled();
         
-        console.log('🔍 AuthButton World App Detection:');
-        console.log('- MiniKit.isInstalled():', isInstalled);
-        console.log('- User Agent:', navigator.userAgent);
-        console.log('- Has walletAuth method:', typeof MiniKit.commandsAsync?.walletAuth === 'function');
+        console.log('🔍 AuthButton: MiniKit.isInstalled() =', isInstalled);
         
         setIsWorldApp(isInstalled);
       } catch (error) {

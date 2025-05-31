@@ -22,17 +22,19 @@ export default function ClientProviders({ children, session }: ClientProvidersPr
           return;
         }
 
+        console.log('🚀 Installing MiniKit...');
+        
         // Install MiniKit - this is crucial for World App detection
         MiniKit.install();
         
         // Wait a bit for MiniKit to fully initialize
         await new Promise(resolve => setTimeout(resolve, 100));
         
-        // Log initialization details
-        console.log('🚀 MiniKit installed successfully');
-        console.log('📱 MiniKit.isInstalled():', MiniKit.isInstalled());
-        console.log('🌐 User Agent:', navigator.userAgent);
-        console.log('🔗 Location:', window.location.href);
+        // Log initialization success
+        console.log('✅ MiniKit installed! isInstalled():', MiniKit.isInstalled());
+        if (navigator.userAgent.includes('WorldApp')) {
+          console.log('📱 Detected World App environment');
+        }
         
         setIsReady(true);
       } catch (error) {
