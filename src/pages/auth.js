@@ -1,22 +1,10 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { AuthButton } from '../components/AuthButton'
 
 export default function AuthPage() {
   const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-
-  const handleWorldIDAuth = async () => {
-    setIsLoading(true)
-    
-    // Simulate WorldID authentication
-    setTimeout(() => {
-      setIsLoading(false)
-      // Set authentication status
-      localStorage.setItem('isAuthenticated', 'true')
-      router.push('/')
-    }, 2000)
-  }
 
   return (
     <>
@@ -44,20 +32,9 @@ export default function AuthPage() {
             </p>
           </div>
 
-          {/* WorldID Authorization Button - Only button */}
+          {/* WorldID Authorization Button */}
           <div className="w-full max-w-sm">
-            <button 
-              className="btn-primary worldid-button w-full"
-              onClick={handleWorldIDAuth}
-              disabled={isLoading}
-            >
-              <div className="w-xxxl h-xxxl bg-text-on-primary rounded-md flex items-center justify-center">
-                <svg className="w-6 h-6 text-primary-green" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
-              </div>
-              {isLoading ? 'Authorizing...' : 'Authorize with WorldID'}
-            </button>
+            <AuthButton />
           </div>
         </div>
 
