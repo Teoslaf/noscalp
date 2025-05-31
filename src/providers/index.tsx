@@ -1,5 +1,5 @@
 'use client';
-import { MiniKit } from '@worldcoin/minikit-js';
+import { MiniKit, ResponseEvent } from '@worldcoin/minikit-js';
 import { MiniKitProvider } from '@worldcoin/minikit-js/minikit-provider';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
@@ -25,6 +25,14 @@ function MiniKitInitializer({ children }: { children: ReactNode }) {
     const initMiniKit = async () => {
       try {
         await MiniKit.install();
+        
+        // Add event handlers for permissions using subscribe
+        MiniKit.subscribe(ResponseEvent.MiniAppGetPermissions, (payload) => {
+          console.log('Received permissions:', payload);
+          // Return the payload as is since it's already in the correct format
+          return payload;
+        });
+
         console.log('MiniKit initialized successfully');
         setIsInitialized(true);
       } catch (error) {
@@ -33,6 +41,12 @@ function MiniKitInitializer({ children }: { children: ReactNode }) {
     };
 
     initMiniKit();
+
+    // Cleanup function
+    return () => {
+      // Unsubscribe from events when component unmounts
+      MiniKit.unsubscribe(ResponseEvent.MiniAppGetPermissions);
+    };
   }, []);
 
   if (!isInitialized) {

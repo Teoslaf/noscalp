@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from 'react';
  */
 export const AuthButton = () => {
   const [isPending, setIsPending] = useState(false);
+  const [hasAttemptedAuth, setHasAttemptedAuth] = useState(false);
   const { isInstalled } = useMiniKit();
 
   const onClick = useCallback(async () => {
@@ -22,19 +23,18 @@ export const AuthButton = () => {
       await walletAuth();
     } catch (error) {
       console.error('Wallet authentication button error', error);
+    } finally {
       setIsPending(false);
-      return;
     }
-
-    setIsPending(false);
   }, [isInstalled, isPending]);
 
   useEffect(() => {
     const authenticate = async () => {
-      if (isInstalled && !isPending) {
+      if (isInstalled && !isPending && !hasAttemptedAuth) {
         setIsPending(true);
         try {
           await walletAuth();
+          setHasAttemptedAuth(true);
         } catch (error) {
           console.error('Auto wallet authentication error', error);
         } finally {
@@ -44,7 +44,7 @@ export const AuthButton = () => {
     };
 
     authenticate();
-  }, [isInstalled, isPending]);
+  }, [isInstalled, isPending, hasAttemptedAuth]);
 
   return (
     <LiveFeedback

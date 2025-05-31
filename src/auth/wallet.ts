@@ -1,5 +1,11 @@
 import { MiniKit } from '@worldcoin/minikit-js';
-import { getNewNonces } from '@/auth/server-helpers';
+
+// Generate a random nonce for authentication
+const generateNonce = () => {
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+};
 
 export const walletAuth = async () => {
   if (!MiniKit.isInstalled()) {
@@ -7,7 +13,7 @@ export const walletAuth = async () => {
   }
 
   try {
-    const { loginNonce } = getNewNonces();
+    const loginNonce = generateNonce();
     const { finalPayload } = await MiniKit.commandsAsync.walletAuth({
       nonce: loginNonce,
     });
