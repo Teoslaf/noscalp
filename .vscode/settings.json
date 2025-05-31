@@ -1,0 +1,18 @@
+{
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "typescript.preferences.includeCompletionsForModuleExports": false,
+  "typescript.validate.enable": true,
+  "typescript.suggest.autoImports": false,
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "files.exclude": {
+    "**/my-first-mini-app": true,
+    "**/.next": true,
+    "**/node_modules/@types/react-dom@19*": true,
+    "**/node_modules/@types/react@19*": true
+  },
+  "search.exclude": {
+    "**/my-first-mini-app": true,
+    "**/.next": true
+  },
+  "typescript.preferences.useLabelDetailsInCompletionEntries": true
+} 
