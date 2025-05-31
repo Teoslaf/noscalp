@@ -121,7 +121,7 @@ const MarkdownRenderer = ({ content, className = '', fallback = null }) => {
       }
       // Block code
       return (
-        <pre className="bg-bg-tertiary p-md rounded-md overflow-x-auto mb-md">
+        <pre className="y p-md rounded-md overflow-x-auto mb-md">
           <code className="text-small text-text-primary font-mono">
             {children}
           </code>
