@@ -1,8 +1,9 @@
 'use client'
 
-import { MiniKit } from '@worldcoin/minikit-js'
 import { ISuccessResult } from '@worldcoin/idkit'
 import { useState } from 'react'
+import { MiniKit, VerificationLevel } from '@worldcoin/minikit-js'
+
 
 // ✅ Constants — committed, no env needed
 const WORLD_ID_APP_ID = "app_f3477523033966cba3409a67092fad28"
@@ -22,8 +23,10 @@ export default function Home() {
 
     try {
       const { finalPayload } = await MiniKit.commandsAsync.verify({
+        //app_id: WORLD_ID_APP_ID,
         action: WORLD_ID_ACTION,
         signal: 'user-wallet-address', // replace with real wallet address later
+        verification_level: VerificationLevel.Device,
       })
 
       if (finalPayload.status === 'error') {
