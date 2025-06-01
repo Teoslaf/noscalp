@@ -14,12 +14,22 @@ export const worldchain = defineChain({
     default: {
       http: ['https://worldchain-mainnet.g.alchemy.com/public'],
     },
+    public: {
+      http: ['https://worldchain-mainnet.g.alchemy.com/public'],
+    },
+    alchemy: {
+      http: ['https://worldchain-mainnet.g.alchemy.com/public'],
+    }
   },
   blockExplorers: {
     default: {
       name: 'World Chain Explorer',
-      url: 'https://worldchain-mainnet.explorer.alchemy.com',
+      url: 'https://worldscan.org',
     },
+    alchemy: {
+      name: 'Alchemy World Chain Explorer',
+      url: 'https://worldchain-mainnet.explorer.alchemy.com',
+    }
   },
   contracts: {
     // World ID Router contract address (if available on World Chain)
@@ -31,7 +41,7 @@ export const worldchain = defineChain({
 
 // World Chain Sepolia testnet configuration
 export const worldchainSepolia = defineChain({
-  id: 11155111,
+  id: 4801,
   name: 'World Chain Sepolia',
   nativeCurrency: {
     decimals: 18,
@@ -42,11 +52,14 @@ export const worldchainSepolia = defineChain({
     default: {
       http: ['https://worldchain-sepolia.g.alchemy.com/public'],
     },
+    public: {
+      http: ['https://worldchain-sepolia.g.alchemy.com/public'],
+    }
   },
   blockExplorers: {
     default: {
       name: 'World Chain Sepolia Explorer',
-      url: 'https://sepolia.worldscan.org',
+      url: 'https://worldchain-sepolia.explorer.alchemy.com',
     },
   },
   testnet: true,
@@ -61,6 +74,28 @@ export const WORLD_CHAIN_CONTRACTS = {
   WORLD_ID_ROUTER: '0x163b09b4fE21177c455D850BD815B6D583732432', // Replace with actual address
 } as const;
 
+// Contract configuration
+export const CONTRACT_CONFIG = {
+  // Gas settings
+  GAS_LIMIT_MULTIPLIER: 1.2, // Add 20% buffer to gas estimates
+  MAX_GAS_PRICE: '20', // 20 gwei max
+  
+  // Timeouts
+  TRANSACTION_TIMEOUT: 60000, // 60 seconds
+  CONFIRMATION_BLOCKS: 1, // Number of confirmations to wait for
+  
+  // Platform settings
+  PLATFORM_FEE_DIVISOR: 10000, // For percentage calculations (e.g., 1000 = 10%)
+  
+  // IPFS settings
+  IPFS_GATEWAY: 'https://ipfs.io/ipfs/',
+  IPFS_API_ENDPOINT: 'https://api.pinata.cloud/pinning/pinJSONToIPFS', // Placeholder
+  
+  // Event settings
+  MAX_TICKET_TYPES_PER_EVENT: 10,
+  MAX_TICKETS_PER_PURCHASE: 10,
+} as const;
+
 // Default World ID action for the smart contract
 export const DEFAULT_ACTION = 'verify_human';
 
@@ -69,10 +104,53 @@ export const TEST_ACTION = 'test_verification';
 
 // Helper function to get the correct chain based on environment
 export function getWorldChain() {
-  return process.env.NODE_ENV === 'production' ? worldchain : worldchainSepolia;
+  const isProduction = process.env.NODE_ENV === 'production';
+  const forceMainnet = process.env.NEXT_PUBLIC_FORCE_MAINNET === 'true';
+  
+  return (isProduction || forceMainnet) ? worldchain : worldchainSepolia;
 }
 
 // Helper function to check if a chain ID is World Chain
 export function isWorldChain(chainId: number): boolean {
   return chainId === worldchain.id || chainId === worldchainSepolia.id;
+}
+
+// Helper function to get the correct contract address based on environment
+export function getContractAddress(): string {
+  // For now, we're using the same contract address for both networks
+  // In a real deployment, you might have different addresses
+  return WORLD_CHAIN_CONTRACTS.TARGET_CONTRACT;
+}
+
+// Helper function to get block explorer URL for a transaction
+export function getTransactionUrl(txHash: string, testnet: boolean = false): string {
+  const chain = testnet ? worldchainSepolia : worldchain;
+  return `${chain.blockExplorers.default.url}/tx/${txHash}`;
+}
+
+// Helper function to get block explorer URL for an address
+export function getAddressUrl(address: string, testnet: boolean = false): string {
+  const chain = testnet ? worldchainSepolia : worldchain;
+  return `${chain.blockExplorers.default.url}/address/${address}`;
+}
+
+// Helper function to format gas price for display
+export function formatGasPrice(gasPrice: bigint): string {
+  const gwei = Number(gasPrice) / 1e9;
+  return `${gwei.toFixed(2)} gwei`;
+}
+
+// Helper function to check if we're in development mode
+export function isDevelopment(): boolean {
+  return process.env.NODE_ENV === 'development';
+}
+
+// RPC endpoint configuration with fallbacks
+export function getRPCEndpoint(): string {
+  const chain = getWorldChain();
+  const endpoints = chain.rpcUrls.default.http;
+  
+  // Return the first available endpoint
+  // In production, you might want to implement endpoint health checking
+  return endpoints[0];
 } 

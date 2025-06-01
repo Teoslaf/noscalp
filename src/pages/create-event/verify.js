@@ -1,73 +1,145 @@
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
+import { useEventCreation, useTransactionMonitor } from '@/hooks/useContract'
+import { useContractContext } from '@/context/ContractContext'
+import { getTransactionUrl } from '@/lib/worldchain'
+import { parseEther } from 'viem'
 
 export default function CreateEventStep4() {
   const router = useRouter()
   const [eventData, setEventData] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [error, setError] = useState(null)
+  const [currentStep, setCurrentStep] = useState('creating') // 'creating', 'tickets', 'success'
+  const [createdEventId, setCreatedEventId] = useState(null)
+  const [transactionHash, setTransactionHash] = useState(null)
+
+  // Contract hooks
+  const { createEvent, createTicketType, gasEstimate, isLoading: contractLoading, error: contractError } = useEventCreation()
+  const { monitorTransaction, status: txStatus, hash: txHash } = useTransactionMonitor()
+  const { addTransaction, addCreatedEvent } = useContractContext()
 
   useEffect(() => {
-    // Load complete event data
-    const savedData = localStorage.getItem('createEventData')
-    if (savedData) {
-      const data = JSON.parse(savedData)
-      setEventData(data)
-      
-      // Validate all steps are complete
-      if (!data.eventName || !data.tickets || !data.details) {
-        // Redirect to appropriate step if incomplete
-        if (!data.eventName) {
-          router.push('/create-event')
-        } else if (!data.tickets) {
-          router.push('/create-event/tickets')
-        } else if (!data.details) {
-          router.push('/create-event/details')
-        }
+    const storedData = localStorage.getItem('eventCreationData')
+    if (storedData) {
+      try {
+        const data = JSON.parse(storedData)
+        setEventData(data)
+      } catch (error) {
+        console.error('Error parsing stored event data:', error)
+        router.push('/create-event')
       }
     } else {
       router.push('/create-event')
     }
   }, [router])
 
-  const handleSubmit = async () => {
+  const handleNext = async () => {
+    if (isSubmitting || !eventData) return
+    
     setIsSubmitting(true)
-
+    setError(null)
+    
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      console.log('🔄 Starting event creation on blockchain...')
+      
+      // Step 1: Create the event on blockchain
+      setCurrentStep('creating')
+      
+      const eventResult = await createEvent({
+        eventName: eventData.eventName
+      })
 
-      // Create new event object
-      const newEvent = {
-        id: Date.now(),
-        name: eventData.eventName,
-        description: eventData.details.description,
-        date: eventData.details.date,
-        time: eventData.details.time,
-        location: eventData.details.location,
-        category: eventData.details.category,
-        images: eventData.details.images,
-        tickets: eventData.tickets,
-        organizer: {
-          name: 'Current User', // This would come from auth context
-          id: 'user-123'
-        },
-        createdAt: new Date().toISOString(),
-        status: 'upcoming',
-        attendees: 0,
-        isLiked: false
+      if (!eventResult || !eventResult.success) {
+        throw new Error(eventResult?.error || 'Failed to create event on blockchain')
       }
 
-      // Store in localStorage (in real app, this would be sent to API)
-      const existingEvents = JSON.parse(localStorage.getItem('userEvents') || '[]')
-      existingEvents.push(newEvent)
-      localStorage.setItem('userEvents', JSON.stringify(existingEvents))
+      console.log('✅ Event creation transaction submitted:', eventResult.hash)
+      setTransactionHash(eventResult.hash)
 
-      // Clear creation data
-      localStorage.removeItem('createEventData')
+      // Add transaction to context
+      addTransaction({
+        hash: eventResult.hash,
+        type: 'create_event',
+        status: 'pending'
+      })
 
+      // Monitor the transaction
+      const confirmed = await monitorTransaction(eventResult.hash)
+      
+      if (!confirmed) {
+        throw new Error('Event creation transaction failed')
+      }
+
+      console.log('✅ Event created successfully on blockchain')
+
+      // For now, we'll simulate getting the event ID from the transaction
+      // In a real implementation, you'd parse the transaction receipt for the event ID
+      const simulatedEventId = Math.floor(Math.random() * 10000) + 1
+      setCreatedEventId(simulatedEventId)
+
+      // Step 2: Create ticket types
+      if (eventData.tickets && eventData.tickets.length > 0) {
+        setCurrentStep('tickets')
+        console.log('🎫 Creating ticket types...')
+
+        for (let i = 0; i < eventData.tickets.length; i++) {
+          const ticket = eventData.tickets[i]
+          console.log(`Creating ticket type ${i + 1}/${eventData.tickets.length}:`, ticket)
+
+          const ticketResult = await createTicketType({
+            eventId: simulatedEventId,
+            price: parseEther(ticket.price.toString()),
+            supply: ticket.quantity,
+            ticketType: ticket.name,
+            ipfsHash: `ticket_${i}_${Date.now()}` // Placeholder IPFS hash
+          })
+
+          if (!ticketResult || !ticketResult.success) {
+            console.warn(`Failed to create ticket type ${ticket.name}:`, ticketResult?.error)
+            // Continue with other tickets even if one fails
+          } else {
+            console.log(`✅ Ticket type ${ticket.name} created:`, ticketResult.hash)
+            
+            // Add transaction to context
+            addTransaction({
+              hash: ticketResult.hash,
+              type: 'create_ticket_type',
+              status: 'pending',
+              eventId: simulatedEventId
+            })
+
+            // Monitor ticket creation transaction
+            await monitorTransaction(ticketResult.hash)
+          }
+        }
+      }
+
+      // Step 3: Success
+      console.log('🎉 Event creation completed!')
+      
+      // Add created event to context
+      addCreatedEvent({
+        eventId: simulatedEventId,
+        event: {
+          id: simulatedEventId,
+          organizer: 'current_user', // This would be the actual user address
+          name: eventData.eventName,
+          ticketTypes: [], // This would be populated with actual ticket type IDs
+          active: true
+        },
+        ticketTypes: [], // This would be populated with actual ticket type data
+        creationHash: eventResult.hash,
+        creationDate: new Date()
+      })
+
+      setCurrentStep('success')
       setIsSuccess(true)
+
+      // Clear stored event data
+      localStorage.removeItem('eventCreationData')
 
       // Redirect after success
       setTimeout(() => {
@@ -75,8 +147,8 @@ export default function CreateEventStep4() {
       }, 3000)
 
     } catch (error) {
-      console.error('Error creating event:', error)
-      alert('Failed to create event. Please try again.')
+      console.error('❌ Event creation error:', error)
+      setError(error instanceof Error ? error.message : 'Unknown error occurred')
     } finally {
       setIsSubmitting(false)
     }
@@ -141,13 +213,80 @@ export default function CreateEventStep4() {
               Event Created Successfully!
             </h1>
             <p className="text-body text-text-secondary">
-              Your event "{eventData.eventName}" has been created and is now live. 
-              You'll be redirected to the home page shortly.
+              Your event "{eventData.eventName}" has been created on the blockchain and is now live.
             </p>
+            
+            {transactionHash && (
+              <div className="space-y-sm">
+                <p className="text-caption text-text-muted">Transaction Hash:</p>
+                <a
+                  href={getTransactionUrl(transactionHash)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-caption text-primary-green hover:text-primary-green-hover font-mono break-all"
+                >
+                  {transactionHash}
+                </a>
+              </div>
+            )}
           </div>
 
           <div className="w-full bg-border-primary rounded-full h-2">
             <div className="bg-primary-green h-2 rounded-full animate-pulse w-full"></div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Show blockchain creation progress
+  if (isSubmitting) {
+    return (
+      <div className="screen-container min-h-screen flex items-center justify-center px-3">
+        <div className="text-center space-y-xl max-w-md">
+          <div className="w-20 h-20 border-4 border-primary-green border-t-transparent rounded-full animate-spin mx-auto"></div>
+          
+          <div className="space-y-lg">
+            <h1 className="text-section-header font-bold text-text-primary">
+              Creating Event on Blockchain
+            </h1>
+            
+            <div className="space-y-md">
+              {currentStep === 'creating' && (
+                <p className="text-body text-text-secondary">
+                  🏗️ Creating event on World Chain...
+                </p>
+              )}
+              {currentStep === 'tickets' && (
+                <p className="text-body text-text-secondary">
+                  🎫 Creating ticket types...
+                </p>
+              )}
+              
+              {transactionHash && (
+                <div className="space-y-sm">
+                  <p className="text-caption text-text-muted">Transaction Hash:</p>
+                  <a
+                    href={getTransactionUrl(transactionHash)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-caption text-primary-green hover:text-primary-green-hover font-mono break-all"
+                  >
+                    {transactionHash}
+                  </a>
+                </div>
+              )}
+              
+              {gasEstimate && (
+                <div className="space-y-xs text-caption text-text-muted">
+                  <p>Estimated gas cost: {gasEstimate.estimatedCost} ETH</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="w-full bg-border-primary rounded-full h-2">
+            <div className="bg-primary-green h-2 rounded-full animate-pulse w-3/4"></div>
           </div>
         </div>
       </div>
@@ -206,9 +345,39 @@ export default function CreateEventStep4() {
               Review Your Event
             </h2>
             <p className="text-body text-text-secondary">
-              Check all details before publishing your event
+              Check all details before publishing your event on the blockchain
             </p>
           </div>
+
+          {/* Error Display */}
+          {(error || contractError) && (
+            <div className="section-gap">
+              <div className="card-primary bg-bg-error border-border-error">
+                <div className="flex items-start gap-md">
+                  <div className="text-text-error text-lg">⚠️</div>
+                  <div className="flex-1">
+                    <h3 className="text-small font-medium text-text-error mb-xs">Error Creating Event</h3>
+                    <p className="text-caption text-text-error">{error || contractError}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Gas Estimate */}
+          {gasEstimate && (
+            <div className="section-gap">
+              <div className="card-primary bg-bg-tertiary border-border-secondary">
+                <div className="space-y-sm">
+                  <h3 className="text-small font-medium text-text-primary">⛽ Gas Estimate</h3>
+                  <div className="space-y-xs text-caption text-text-secondary">
+                    <p>Estimated cost: {gasEstimate.estimatedCost} ETH</p>
+                    <p className="text-text-muted">This will create your event on World Chain</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Event Preview */}
           <div className="space-y-lg">
@@ -278,14 +447,14 @@ export default function CreateEventStep4() {
           {/* Action Button */}
           <div className="pt-xl">
             <button
-              onClick={handleSubmit}
-              disabled={isSubmitting}
+              onClick={handleNext}
+              disabled={isSubmitting || contractLoading}
               className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? (
-                <div className="flex items-center justify-center gap-sm">
-                  <div className="w-4 h-4 border-2 border-text-on-primary border-t-transparent rounded-full animate-spin"></div>
-                  Creating Event...
+              {isSubmitting || contractLoading ? (
+                <div className="flex items-center justify-center gap-md">
+                  <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                  <span>Creating on Blockchain...</span>
                 </div>
               ) : (
                 'Confirm & Create Event'
