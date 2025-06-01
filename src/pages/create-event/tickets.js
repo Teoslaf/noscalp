@@ -103,7 +103,7 @@ export default function CreateEventStep2() {
             </button>
 
             {/* Page Title */}
-            <h1 className="text-app-title font-bold text-text-primary">
+            <h1 className="text-body font-bold text-text-primary">
               Create Tickets
             </h1>
 
@@ -178,7 +178,7 @@ export default function CreateEventStep2() {
                 </div>
 
                 {/* Quantity and Price */}
-                <div className="grid grid-cols-2 gap-lg">
+                <div className="space-y-lg">
                   {/* Quantity */}
                   <div>
                     <label className="block text-caption font-medium text-text-primary mb-xs">
@@ -187,7 +187,7 @@ export default function CreateEventStep2() {
                     <input
                       type="number"
                       placeholder="100"
-                      value={ticket.quantity}
+                      value={ticket.quantity === 0 ? '' : ticket.quantity}
                       onChange={(e) => updateTicket(ticket.id, 'quantity', parseInt(e.target.value) || 0)}
                       className="input-primary w-full"
                       min="0"
@@ -199,20 +199,20 @@ export default function CreateEventStep2() {
                     <label className="block text-caption font-medium text-text-primary mb-xs">
                       Price
                     </label>
-                    <div className="flex gap-sm">
+                    <div className="flex gap-xs max-w-full">
                       <input
                         type="number"
                         placeholder="50"
-                        value={ticket.price}
+                        value={ticket.price === 0 ? '' : ticket.price}
                         onChange={(e) => updateTicket(ticket.id, 'price', parseFloat(e.target.value) || 0)}
-                        className="input-primary flex-1"
+                        className="input-primary w-32"
                         min="0"
                         step="0.01"
                       />
                       <select
                         value={ticket.currency}
                         onChange={(e) => updateTicket(ticket.id, 'currency', e.target.value)}
-                        className="input-primary text-small px-md py-0 w-20"
+                        className="input-primary text-small px-sm py-0 w-20"
                       >
                         <option value="USD">USD</option>
                         <option value="EUR">EUR</option>
@@ -253,49 +253,12 @@ export default function CreateEventStep2() {
             </button>
           </div>
 
-          {/* Common Ticket Examples */}
-          <div className="section-gap">
-            <p className="text-caption text-text-secondary mb-sm">Quick templates:</p>
-            <div className="flex flex-wrap gap-sm">
-              {[
-                { name: 'Early Bird', price: 25 },
-                { name: 'Regular', price: 50 },
-                { name: 'VIP', price: 100 },
-                { name: 'Student', price: 20 },
-                { name: 'Free', price: 0 }
-              ].map((template, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    const newTicket = {
-                      id: Date.now(),
-                      name: template.name,
-                      quantity: 50,
-                      price: template.price,
-                      currency: 'USD'
-                    }
-                    setTickets([...tickets, newTicket])
-                  }}
-                  className="px-md py-xs bg-bg-tertiary hover:bg-border-primary text-text-secondary text-caption rounded-button transition-colors duration-fast"
-                >
-                  + {template.name} ({template.price === 0 ? 'Free' : `$${template.price}`})
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Navigation */}
           <div className="flex gap-lg pt-xl">
             <button
-              onClick={handleBack}
-              className="btn-secondary flex-1"
-            >
-              Back
-            </button>
-            <button
               onClick={handleNext}
               disabled={isLoading}
-              className="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Processing...' : 'Continue to Details'}
             </button>

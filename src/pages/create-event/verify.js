@@ -178,7 +178,7 @@ export default function CreateEventStep4() {
             </button>
 
             {/* Page Title */}
-            <h1 className="text-app-title font-bold text-text-primary">
+            <h1 className="text-body font-bold text-text-primary">
               Review & Create
             </h1>
 
@@ -212,174 +212,85 @@ export default function CreateEventStep4() {
 
           {/* Event Preview */}
           <div className="space-y-lg">
-            {/* Main Event Card */}
-            <div className="card-primary space-y-lg">
+            {/* Event Card in Homepage Format */}
+            <div className="card-primary cursor-default">
               {/* Event Image */}
               {eventData.details.images && eventData.details.images.length > 0 && (
-                <div className="relative">
+                <div className="relative w-full aspect-event-banner rounded-md overflow-hidden mb-lg">
                   <img
                     src={eventData.details.images[0].url}
                     alt={eventData.eventName}
-                    className="w-full h-48 object-cover rounded-md"
+                    className="w-full h-full object-cover"
                   />
-                  <div className="absolute top-sm right-sm bg-primary-green text-text-on-primary px-sm py-xs rounded text-small">
+                  <div className="absolute top-md right-md px-md py-xs bg-bg-overlay text-text-primary rounded-button text-small font-medium">
                     {eventData.details.category}
                   </div>
                 </div>
               )}
 
-              {/* Event Info */}
-              <div className="space-y-lg">
-                <div>
-                  <h3 className="text-section-header font-bold text-text-primary mb-sm">
-                    {eventData.eventName}
-                  </h3>
-                  <p className="text-body text-text-secondary">
-                    {eventData.details.description}
-                  </p>
+              {/* Event Content */}
+              <div className="space-y-md">
+                {/* Category Badge */}
+                <div className="inline-block px-md py-xs rounded-button text-small font-medium w-fit bg-primary-green bg-opacity-10 text-primary-green">
+                  {eventData.details.category}
                 </div>
 
-                {/* Event Details Grid */}
-                <div className="grid grid-cols-2 gap-lg">
-                  <div className="space-y-sm">
-                    <div className="flex items-center gap-sm">
-                      <svg className="w-5 h-5 text-primary-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      <div>
-                        <p className="text-caption text-text-muted">Date & Time</p>
-                        <p className="text-body text-text-primary font-medium">
-                          {formatDate(eventData.details.date, eventData.details.time)}
-                        </p>
-                      </div>
-                    </div>
+                {/* Event Title */}
+                <h3 className="text-body font-medium text-text-primary">
+                  {eventData.eventName}
+                </h3>
+
+                {/* Brief Description */}
+                <p className="text-caption text-text-muted mb-sm">
+                  {eventData.details.description}
+                </p>
+
+                {/* Event Details */}
+                <div className="space-y-xs">
+                  {/* Date and Time */}
+                  <div className="flex items-center gap-sm text-caption text-text-secondary">
+                    <span>📅</span>
+                    <span>{formatDate(eventData.details.date, eventData.details.time)}</span>
                   </div>
 
-                  <div className="space-y-sm">
-                    <div className="flex items-center gap-sm">
-                      <svg className="w-5 h-5 text-primary-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <div>
-                        <p className="text-caption text-text-muted">Location</p>
-                        <p className="text-body text-text-primary font-medium">
-                          {eventData.details.location}
-                        </p>
-                      </div>
-                    </div>
+                  {/* Location */}
+                  <div className="flex items-center gap-sm text-caption text-text-secondary">
+                    <span>📍</span>
+                    <span className="line-clamp-1">
+                      {eventData.details.location}
+                    </span>
                   </div>
 
-                  <div className="space-y-sm">
-                    <div className="flex items-center gap-sm">
-                      <svg className="w-5 h-5 text-primary-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                      </svg>
-                      <div>
-                        <p className="text-caption text-text-muted">Tickets</p>
-                        <p className="text-body text-text-primary font-medium">
-                          {getTotalTickets()} available
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-sm">
-                    <div className="flex items-center gap-sm">
-                      <svg className="w-5 h-5 text-primary-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                      </svg>
-                      <div>
-                        <p className="text-caption text-text-muted">Price Range</p>
-                        <p className="text-body text-text-primary font-medium">
-                          {getTicketPriceRange()}
-                        </p>
-                      </div>
-                    </div>
+                  {/* Price */}
+                  <div className="flex items-center justify-between pt-xs">
+                    <span className="text-body font-medium text-primary-green">
+                      {getTicketPriceRange()}
+                    </span>
+                    <span className="text-caption text-text-muted">
+                      {getTotalTickets()} tickets available
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-
-            {/* Ticket Types Summary */}
-            <div className="card-primary space-y-lg">
-              <h4 className="text-body font-medium text-text-primary">Ticket Types</h4>
-              <div className="space-y-sm">
-                {eventData.tickets.map((ticket, index) => (
-                  <div key={index} className="flex items-center justify-between p-md bg-bg-tertiary rounded-md">
-                    <div>
-                      <p className="text-body font-medium text-text-primary">{ticket.name}</p>
-                      <p className="text-caption text-text-muted">{ticket.quantity} available</p>
-                    </div>
-                    <div className="text-body font-bold text-primary-green">
-                      {ticket.price === 0 ? 'Free' : `${ticket.price} ${ticket.currency}`}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Additional Images */}
-            {eventData.details.images && eventData.details.images.length > 1 && (
-              <div className="card-primary space-y-lg">
-                <h4 className="text-body font-medium text-text-primary">
-                  Additional Images ({eventData.details.images.length - 1})
-                </h4>
-                <div className="grid grid-cols-3 gap-sm">
-                  {eventData.details.images.slice(1).map((image, index) => (
-                    <img
-                      key={index}
-                      src={image.url}
-                      alt={`Event image ${index + 2}`}
-                      className="w-full h-20 object-cover rounded-md border border-border-secondary"
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
 
-          {/* Terms and Create Button */}
-          <div className="space-y-lg pt-xl">
-            <div className="card-primary">
-              <div className="flex items-start gap-sm">
-                <input
-                  type="checkbox"
-                  id="terms"
-                  className="mt-1 w-4 h-4 text-primary-green bg-bg-primary border-border-primary rounded focus:ring-primary-green"
-                  defaultChecked
-                />
-                <label htmlFor="terms" className="text-caption text-text-secondary">
-                  I agree to the Terms of Service and confirm that all information provided is accurate. 
-                  I understand that false information may result in event removal.
-                </label>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-lg">
-              <button
-                onClick={handleBack}
-                disabled={isSubmitting}
-                className="btn-secondary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Back to Edit
-              </button>
-              <button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? (
-                  <div className="flex items-center justify-center gap-sm">
-                    <div className="w-4 h-4 border-2 border-text-on-primary border-t-transparent rounded-full animate-spin"></div>
-                    Creating Event...
-                  </div>
-                ) : (
-                  'Create Event'
-                )}
-              </button>
-            </div>
+          {/* Action Button */}
+          <div className="pt-xl">
+            <button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? (
+                <div className="flex items-center justify-center gap-sm">
+                  <div className="w-4 h-4 border-2 border-text-on-primary border-t-transparent rounded-full animate-spin"></div>
+                  Creating Event...
+                </div>
+              ) : (
+                'Confirm & Create Event'
+              )}
+            </button>
           </div>
         </div>
       </div>

@@ -104,6 +104,12 @@ export default function SettingsPage() {
           onClick: () => window.open('#', '_blank')
         },
         {
+          name: 'ZK Proof Generator',
+          description: 'Generate zero-knowledge proofs with World ID',
+          type: 'link',
+          onClick: () => router.push('/zk-proof')
+        },
+        {
           name: 'Version',
           description: 'v1.0.0',
           type: 'info'

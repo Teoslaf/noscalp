@@ -112,6 +112,16 @@
     right: max(12px, env(safe-area-inset-right));
   }
 
+  /* Scrollbar hiding utilities */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Markdown content styling */
   .search-result-description .markdown-content > * {
     margin-bottom: 0 !important;

@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import BottomNav from '../../components/BottomNav'
 
 export default function CreateEventStep1() {
   const router = useRouter()
@@ -46,7 +47,7 @@ export default function CreateEventStep1() {
             </button>
 
             {/* Page Title */}
-            <h1 className="text-app-title font-bold text-text-primary">
+            <h1 className="text-body font-bold text-text-primary">
               Create Event
             </h1>
 
@@ -56,7 +57,7 @@ export default function CreateEventStep1() {
         </div>
 
         {/* Content */}
-        <div className="pt-top-bar-height px-3 flex flex-col h-screen">
+        <div className="pt-top-bar-height px-3 flex flex-col min-h-screen pb-bottom-nav-height">
           {/* Progress Indicator */}
           <div className="section-gap">
             <div className="flex items-center justify-between mb-sm">
@@ -69,7 +70,7 @@ export default function CreateEventStep1() {
           </div>
 
           {/* Main Content */}
-          <div className="flex-1 flex flex-col justify-center">
+          <div className="flex-1 flex flex-col justify-center py-lg">
             <div className="space-y-xl">
               {/* Header */}
               <div className="text-center space-y-lg">
@@ -139,7 +140,7 @@ export default function CreateEventStep1() {
           </div>
 
           {/* Bottom Actions */}
-          <div className="pb-xl pt-lg">
+          <div className="py-lg px-lg -mx-lg">
             <button
               onClick={handleNext}
               disabled={!eventName.trim() || isLoading}
@@ -149,6 +150,9 @@ export default function CreateEventStep1() {
             </button>
           </div>
         </div>
+
+        {/* Bottom Navigation */}
+        <BottomNav activeTab="create" />
       </div>
     </>
   )

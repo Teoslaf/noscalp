@@ -8,6 +8,7 @@ export default function TicketsPage() {
   const [userTickets, setUserTickets] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('upcoming') // 'upcoming' or 'past'
+  const [expandedTicket, setExpandedTicket] = useState(null) // Track which ticket is expanded
 
   // Mock user tickets data (in real app, this would come from API)
   const mockTickets = [
@@ -25,9 +26,12 @@ export default function TicketsPage() {
       currency: 'USD',
       purchaseDate: '2024-05-01',
       status: 'upcoming',
-      nftImage: 'https://images.unsplash.com/photo-1541532713592-79a0317b6b84?w=400&h=400&fit=crop',
+      nftImage: 'https://images.unsplash.com/photo-1673022177475-5f15ec15ff11?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       qrCode: 'QR123456789',
-      category: 'Technology'
+      category: 'Technology',
+      description: 'Join industry leaders and blockchain enthusiasts for the premier Web3 conference in Prague. Network with innovators, learn about cutting-edge technologies, and discover the future of decentralized web.',
+      organizer: 'Web3 Foundation',
+      benefits: ['VIP Lounge Access', 'Priority Seating', 'Networking Dinner', 'Conference Swag']
     },
     {
       id: 2,
@@ -45,7 +49,10 @@ export default function TicketsPage() {
       status: 'upcoming',
       nftImage: 'https://images.unsplash.com/photo-1549923746-c502d488b3ea?w=400&h=400&fit=crop',
       qrCode: 'QR987654321',
-      category: 'Business'
+      category: 'Business',
+      description: 'Connect with entrepreneurs, investors, and startup enthusiasts in an intimate networking environment. Share ideas, find co-founders, and build meaningful business relationships.',
+      organizer: 'Startup Prague',
+      benefits: ['Welcome Drink', 'Business Card Exchange', 'Pitch Competition Entry']
     },
     {
       id: 3,
@@ -61,15 +68,18 @@ export default function TicketsPage() {
       currency: 'USD',
       purchaseDate: '2024-03-15',
       status: 'past',
-      nftImage: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=400&fit=crop',
+      nftImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&h=400&fit=crop',
       qrCode: 'QR456789123',
-      category: 'Arts & Culture'
+      category: 'Arts & Culture',
+      description: 'Explore the intersection of technology and creativity in this groundbreaking digital art exhibition featuring NFT artists and interactive installations.',
+      organizer: 'Digital Arts Collective',
+      benefits: ['Artist Meet & Greet', 'Exhibition Catalog', 'Limited Edition Print']
     },
     {
       id: 4,
       eventId: 12,
       eventName: 'Blockchain Hackathon',
-      eventImage: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop',
+      eventImage: 'https://images.unsplash.com/photo-1673022177475-5f15ec15ff11?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       date: '2024-03-05',
       time: '09:00',
       location: 'Tech Campus',
@@ -81,7 +91,10 @@ export default function TicketsPage() {
       status: 'past',
       nftImage: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=400&fit=crop',
       qrCode: 'QR789123456',
-      category: 'Technology'
+      category: 'Technology',
+      description: '48-hour intensive hackathon focused on building innovative blockchain solutions. Work with talented developers and compete for prizes.',
+      organizer: 'Blockchain Developers Prague',
+      benefits: ['Free Meals', 'Mentorship Sessions', 'Prize Pool Access', 'Developer Swag']
     }
   ]
 
@@ -133,8 +146,12 @@ export default function TicketsPage() {
   }
 
   const handleTicketClick = (ticket) => {
-    // Navigate to ticket detail view
-    router.push(`/ticket/${ticket.id}`)
+    // Toggle expansion instead of navigating
+    if (expandedTicket === ticket.id) {
+      setExpandedTicket(null)
+    } else {
+      setExpandedTicket(ticket.id)
+    }
   }
 
   if (isLoading) {
@@ -174,14 +191,17 @@ export default function TicketsPage() {
             </button>
 
             {/* Page Title */}
-            <h1 className="text-app-title font-bold text-text-primary">
+            <h1 className="text-body font-bold text-text-primary">
               My Tickets
             </h1>
 
-            {/* Filter/Sort Button */}
-            <button className="p-sm hover:bg-interactive-hover rounded-md transition-colors duration-fast">
+            {/* NFTs Link */}
+            <button 
+              className="p-sm hover:bg-interactive-hover rounded-md transition-colors duration-fast"
+              onClick={() => router.push('/nfts')}
+            >
               <svg className="w-6 h-6 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </button>
           </div>
@@ -200,7 +220,7 @@ export default function TicketsPage() {
                     : 'text-text-secondary hover:text-text-primary'
                 }`}
               >
-                Future Events ({upcomingTickets.length})
+                Upcoming ({upcomingTickets.length})
               </button>
               <button
                 onClick={() => setActiveTab('past')}
@@ -210,154 +230,129 @@ export default function TicketsPage() {
                     : 'text-text-secondary hover:text-text-primary'
                 }`}
               >
-                Past Events ({pastTickets.length})
+                Past ({pastTickets.length})
               </button>
             </div>
           </div>
 
-          {/* Tickets Grid */}
-          <div>
-            {getFilteredTickets().length === 0 ? (
-              <div className="text-center py-xxxl space-y-lg">
-                <div className="w-20 h-20 bg-bg-tertiary rounded-full flex items-center justify-center mx-auto">
-                  <svg className="w-10 h-10 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                  </svg>
+          {/* Tickets List */}
+          <div className="space-y-lg">
+            {getFilteredTickets().length > 0 ? (
+              getFilteredTickets().map((ticket) => (
+                <div
+                  key={ticket.id}
+                  className={`card-primary cursor-pointer transition-all duration-normal ease-out hover:transform hover:translate-y-[-2px] hover:shadow-lg ${
+                    expandedTicket === ticket.id ? 'ring-2 ring-primary-green' : ''
+                  }`}
+                  onClick={() => handleTicketClick(ticket)}
+                >
+                  {/* Basic Ticket Info */}
+                  <div className="space-y-md">
+                    {/* NFT Image */}
+                    <div className="w-full aspect-square rounded-lg overflow-hidden">
+                      <img
+                        src={ticket.nftImage}
+                        alt={`${ticket.eventName} NFT`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    {/* Ticket Details */}
+                    <div className="space-y-xs">
+                      <div className="flex items-start justify-between">
+                        <h3 className="text-body font-medium text-text-primary line-clamp-2 flex-1">
+                          {ticket.eventName}
+                        </h3>
+                        <div className={`w-3 h-3 rounded-full ${getCategoryColor(ticket.category)} ml-sm mt-xs flex-shrink-0`}></div>
+                      </div>
+                      
+                      <div className="flex items-center gap-sm text-caption text-text-secondary">
+                        <span>📅</span>
+                        <span>{formatDate(ticket.date, ticket.time)}</span>
+                        <span>•</span>
+                        <span>{ticket.ticketType}</span>
+                      </div>
+                      
+                      <div className="flex items-center gap-sm text-caption text-text-secondary">
+                        <span>📍</span>
+                        <span className="line-clamp-1">{ticket.location}</span>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-xs">
+                        <span className="text-body font-medium text-primary-green">
+                          ${ticket.originalPrice}
+                        </span>
+                        <span className="text-caption text-text-muted">
+                          Qty: {ticket.quantity}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Expanded Content */}
+                  {expandedTicket === ticket.id && (
+                    <div className="mt-lg pt-lg border-t border-border-muted space-y-lg">
+                      {/* Event Image */}
+                      <div className="rounded-lg overflow-hidden">
+                        <img
+                          src={ticket.eventImage}
+                          alt={ticket.eventName}
+                          className="w-full h-48 object-cover"
+                        />
+                      </div>
+
+                      {/* Event Description */}
+                      <div>
+                        <h4 className="text-body font-medium text-text-primary mb-sm">About this Event</h4>
+                        <p className="text-caption text-text-secondary leading-relaxed">
+                          {ticket.description}
+                        </p>
+                      </div>
+
+                      {/* Benefits */}
+                      {ticket.benefits && ticket.benefits.length > 0 && (
+                        <div>
+                          <h4 className="text-body font-medium text-text-primary mb-sm">Ticket Benefits</h4>
+                          <div className="grid grid-cols-1 gap-xs">
+                            {ticket.benefits.map((benefit, index) => (
+                              <div key={index} className="flex items-center gap-xs text-caption text-text-secondary">
+                                <span className="text-primary-green">✓</span>
+                                <span>{benefit}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-                <div>
-                  <h3 className="text-section-header font-bold text-text-primary mb-sm">
-                    {activeTab === 'upcoming' ? 'No Upcoming Events' : 'No Past Events'}
-                  </h3>
-                  <p className="text-body text-text-secondary max-w-sm mx-auto">
-                    {activeTab === 'upcoming' 
-                      ? 'You haven\'t purchased tickets for any upcoming events yet. Discover events to get started!'
-                      : 'You haven\'t attended any events yet. Your past event NFTs will appear here.'
-                    }
-                  </p>
-                </div>
+              ))
+            ) : (
+              /* Empty State */
+              <div className="flex flex-col items-center justify-center py-xxxl text-center">
+                <svg className="w-16 h-16 text-text-muted mb-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                </svg>
+                <h3 className="text-body font-medium text-text-secondary mb-sm">
+                  No {activeTab} tickets
+                </h3>
+                <p className="text-caption text-text-muted max-w-xs">
+                  {activeTab === 'upcoming' 
+                    ? "You don't have any upcoming events. Discover and book exciting events!"
+                    : "No past events to show. Start attending events to build your collection!"
+                  }
+                </p>
                 {activeTab === 'upcoming' && (
                   <button
                     onClick={() => router.push('/')}
-                    className="btn-primary"
+                    className="btn-secondary mt-lg"
                   >
                     Discover Events
                   </button>
                 )}
               </div>
-            ) : (
-              <div className="space-y-lg pb-xl">
-                {getFilteredTickets().map((ticket) => (
-                  <div
-                    key={ticket.id}
-                    onClick={() => handleTicketClick(ticket)}
-                    className="card-primary cursor-pointer hover:scale-105 transition-transform duration-fast"
-                  >
-                    {/* Vertical layout: image on top, info below */}
-                    <div className="space-y-lg">
-                      {/* NFT Image */}
-                      <div className="relative">
-                        <div className="w-full aspect-square rounded-md overflow-hidden bg-bg-tertiary">
-                          <img
-                            src={ticket.nftImage}
-                            alt={`${ticket.eventName} NFT`}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        
-                        {/* Category Badge */}
-                        <div className={`absolute top-sm right-sm ${getCategoryColor(ticket.category)} text-white px-sm py-xs rounded text-small font-medium`}>
-                          NFT
-                        </div>
-
-                        {/* Quantity Badge */}
-                        {ticket.quantity > 1 && (
-                          <div className="absolute top-sm left-sm bg-text-primary text-bg-primary px-sm py-xs rounded-full text-small font-bold">
-                            {ticket.quantity}x
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Ticket Info */}
-                      <div className="space-y-md">
-                        <div>
-                          <h3 className="text-body font-bold text-text-primary mb-xs line-clamp-2">
-                            {ticket.eventName}
-                          </h3>
-                          <p className="text-caption text-text-secondary">
-                            {ticket.ticketType}
-                          </p>
-                        </div>
-
-                        <div className="space-y-sm">
-                          <div className="flex items-center gap-sm">
-                            <svg className="w-4 h-4 text-text-muted flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            <span className="text-small text-text-secondary">
-                              {formatDate(ticket.date, ticket.time)}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center gap-sm">
-                            <svg className="w-4 h-4 text-text-muted flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            <span className="text-small text-text-secondary line-clamp-1">
-                              {ticket.location}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Price and Status */}
-                        <div className="flex items-center justify-between pt-sm border-t border-border-secondary">
-                          <span className="text-caption font-medium text-primary-green">
-                            {ticket.originalPrice === 0 ? 'Free' : `$${ticket.originalPrice}`}
-                          </span>
-                          <div className={`px-sm py-xs rounded-full text-small ${
-                            activeTab === 'upcoming' 
-                              ? 'bg-primary-green bg-opacity-10 text-primary-green'
-                              : 'bg-text-muted bg-opacity-10 text-text-muted'
-                          }`}>
-                            {activeTab === 'upcoming' ? 'Active' : 'Used'}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
             )}
           </div>
-
-          {/* Stats Section */}
-          {userTickets.length > 0 && (
-            <div className="pb-xl">
-              <div className="card-primary space-y-lg">
-                <h3 className="text-body font-medium text-text-primary">Collection Stats</h3>
-                <div className="grid grid-cols-3 gap-lg text-center">
-                  <div>
-                    <p className="text-section-header font-bold text-primary-green">
-                      {userTickets.length}
-                    </p>
-                    <p className="text-caption text-text-secondary">Total NFTs</p>
-                  </div>
-                  <div>
-                    <p className="text-section-header font-bold text-primary-green">
-                      {upcomingTickets.length}
-                    </p>
-                    <p className="text-caption text-text-secondary">Upcoming</p>
-                  </div>
-                  <div>
-                    <p className="text-section-header font-bold text-primary-green">
-                      {userTickets.reduce((sum, ticket) => sum + ticket.quantity, 0)}
-                    </p>
-                    <p className="text-caption text-text-secondary">Total Tickets</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Bottom Navigation */}

@@ -75,28 +75,12 @@ export default function CreateEventStep3() {
   }
 
   const handleNext = () => {
-    // Validate required fields
-    if (!formData.description.trim()) {
-      alert('Please add an event description')
-      return
-    }
-    if (!formData.date) {
-      alert('Please select an event date')
-      return
-    }
-    if (!formData.time) {
-      alert('Please select an event time')
-      return
-    }
-    if (!formData.location.trim()) {
-      alert('Please add an event location')
-      return
-    }
-    if (!formData.category) {
-      alert('Please select a category')
-      return
-    }
-
+    console.log('handleNext called');
+    console.log('formData:', formData);
+    
+    // Temporary: Skip validation for debugging
+    console.log('Skipping validation for debugging...');
+    
     setIsLoading(true)
 
     // Update event data with details
@@ -105,9 +89,14 @@ export default function CreateEventStep3() {
       details: formData
     }
     localStorage.setItem('createEventData', JSON.stringify(updatedEventData))
+    console.log('Data saved, navigating...');
 
-    // Navigate to final step
-    router.push('/create-event/verify')
+    // Navigate to verification step after a short delay
+    setTimeout(() => {
+      console.log('Navigating to verify page...');
+      setIsLoading(false)
+      router.push('/create-event/verify')
+    }, 500)
   }
 
   const handleBack = () => {
@@ -153,7 +142,7 @@ export default function CreateEventStep3() {
             </button>
 
             {/* Page Title */}
-            <h1 className="text-app-title font-bold text-text-primary">
+            <h1 className="text-body font-bold text-text-primary">
               Event Details
             </h1>
 
@@ -196,7 +185,7 @@ export default function CreateEventStep3() {
                   placeholder="Describe your event. What makes it special? What can attendees expect?"
                   value={formData.description}
                   onChange={(e) => handleInputChange('description', e.target.value)}
-                  className="input-primary w-full h-32 resize-none"
+                  className="input-primary w-full h-32 resize-none pt-lg"
                   maxLength={1000}
                 />
                 <div className="flex justify-between items-center mt-xs">
@@ -268,7 +257,7 @@ export default function CreateEventStep3() {
             {/* Date and Time */}
             <div className="card-primary space-y-lg">
               <h3 className="text-body font-medium text-text-primary">Date & Time</h3>
-              <div className="grid grid-cols-2 gap-lg">
+              <div className="space-y-lg">
                 <div>
                   <label className="block text-caption font-medium text-text-primary mb-xs">
                     Date
@@ -277,7 +266,7 @@ export default function CreateEventStep3() {
                     type="date"
                     value={formData.date}
                     onChange={(e) => handleInputChange('date', e.target.value)}
-                    className="input-primary w-full"
+                    className="input-primary object-cover rounded-md border border-border-secondary "
                     min={new Date().toISOString().split('T')[0]}
                   />
                 </div>
@@ -289,7 +278,7 @@ export default function CreateEventStep3() {
                     type="time"
                     value={formData.time}
                     onChange={(e) => handleInputChange('time', e.target.value)}
-                    className="input-primary w-full"
+                    className="input-primary w-56"
                   />
                 </div>
               </div>
@@ -336,15 +325,9 @@ export default function CreateEventStep3() {
           {/* Navigation */}
           <div className="flex gap-lg pt-xl">
             <button
-              onClick={handleBack}
-              className="btn-secondary flex-1"
-            >
-              Back
-            </button>
-            <button
               onClick={handleNext}
               disabled={isLoading}
-              className="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Processing...' : 'Review & Create'}
             </button>

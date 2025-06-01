@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'localhost',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
       // Add your image domains here (e.g., event image CDNs)
       // {
       //   protocol: 'https',

@@ -46,30 +46,58 @@ export const AuthButton = () => {
       setIsPending(true);
       setError(null);
 
-      // Step 1: Get nonce from backend
-      const nonceResponse = await fetch('/api/nonce');
-      const { nonce } = await nonceResponse.json();
+      console.log('🚀 Starting WorldID authentication...');
 
-      if (!nonce) {
-        setError('Failed to generate authentication nonce');
-        return;
+      // Step 1: Get nonce from backend
+      console.log('📡 Fetching nonce from /api/nonce...');
+      const nonceResponse = await fetch('/api/nonce');
+      
+      if (!nonceResponse.ok) {
+        throw new Error(`Failed to fetch nonce: ${nonceResponse.status} ${nonceResponse.statusText}`);
+      }
+      
+      const nonceData = await nonceResponse.json();
+      console.log('✅ Nonce received:', nonceData);
+
+      if (!nonceData.nonce) {
+        throw new Error('No nonce received from server');
       }
 
       // Step 2: Perform wallet authentication with MiniKit
-      const { commandPayload, finalPayload } = await MiniKit.commandsAsync.walletAuth({
-        nonce: nonce,
+      console.log('🔐 Starting MiniKit wallet authentication...');
+      const result = await MiniKit.commandsAsync.walletAuth({
+        nonce: nonceData.nonce,
         requestId: '0', // Optional
         expirationTime: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000), // 7 days
         notBefore: new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // 24 hours ago
         statement: 'Sign in to Noscalp - Discover amazing events with verified identity',
+        // Add these for better SIWE compatibility
+        chainId: 1, // Ethereum mainnet
+        domain: window.location.host,
+        uri: window.location.origin,
+        version: '1'
       });
 
+      console.log('📋 MiniKit wallet auth result:', result);
+
+      const { commandPayload, finalPayload } = result;
+
       if (finalPayload.status === 'error') {
-        setError('Authentication was cancelled or failed');
-        return;
+        throw new Error(`Wallet authentication failed: ${finalPayload.error_code || 'Unknown error'}`);
       }
 
+      if (finalPayload.status !== 'success') {
+        throw new Error(`Unexpected wallet auth status: ${finalPayload.status}`);
+      }
+
+      // Log details about the payload for debugging
+      console.log('📋 Final payload details:');
+      console.log('- Address:', finalPayload.address);
+      console.log('- Message preview:', finalPayload.message?.substring(0, 100) + '...');
+      console.log('- Signature:', finalPayload.signature?.substring(0, 20) + '...');
+
       // Step 3: Verify the signature on the backend
+      console.log('🔍 Verifying signature on backend...');
       const verificationResponse = await fetch('/api/complete-siwe', {
         method: 'POST',
         headers: {
@@ -77,14 +105,24 @@ export const AuthButton = () => {
         },
         body: JSON.stringify({
           payload: finalPayload,
-          nonce,
+          nonce: nonceData.nonce,
         }),
       });
 
+      console.log('📡 Verification response status:', verificationResponse.status);
+
+      if (!verificationResponse.ok) {
+        const errorText = await verificationResponse.text();
+        console.error('❌ Verification request failed:', errorText);
+        throw new Error(`Verification failed: ${verificationResponse.status} - ${errorText}`);
+      }
+
       const verificationResult = await verificationResponse.json();
+      console.log('📋 Verification result:', verificationResult);
 
       if (verificationResult.isValid) {
         // Authentication successful!
+        console.log('🎉 Authentication successful!');
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('walletAddress', verificationResult.address);
         
@@ -93,16 +131,24 @@ export const AuthButton = () => {
         
         if (username) {
           localStorage.setItem('username', username);
+          console.log('👤 Username stored:', username);
         }
 
         // Redirect to home page
+        console.log('🏠 Redirecting to home...');
         window.location.href = '/';
       } else {
-        setError('Authentication verification failed: ' + verificationResult.message);
+        throw new Error(`Authentication verification failed: ${verificationResult.message || 'Unknown verification error'}`);
       }
     } catch (error) {
-      console.error('Authentication error:', error);
-      setError('Authentication failed: Please try again');
+      console.error('❌ Authentication error:', error);
+      
+      // More detailed error messages
+      if (error instanceof Error) {
+        setError(`Authentication failed: ${error.message}`);
+      } else {
+        setError('Authentication failed: Unknown error occurred');
+      }
     } finally {
       setIsPending(false);
     }

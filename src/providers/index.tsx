@@ -39,11 +39,23 @@ export default function ClientProviders({ children, session }: ClientProvidersPr
         setIsReady(true);
       } catch (error) {
         console.error('❌ Error initializing MiniKit:', error);
+        // Even if there's an error, we should still render the app
         setIsReady(true);
       }
     };
 
-    initializeMiniKit();
+    // Set a timeout to prevent infinite loading
+    const timeout = setTimeout(() => {
+      console.warn('⚠️ MiniKit initialization timed out, proceeding anyway');
+      setIsReady(true);
+    }, 5000); // 5 second timeout
+
+    initializeMiniKit().finally(() => {
+      clearTimeout(timeout);
+    });
+
+    // Cleanup timeout on unmount
+    return () => clearTimeout(timeout);
   }, []);
 
   if (!isReady) {
