@@ -120,7 +120,7 @@ module.exports = {
         'small-button-padding': designTokens.spacing.smallButtonPadding,
         
         // Component heights
-        'bottom-nav-height': designTokens.spacing.bottomNavHeight,
+        'bottom-nav-height': '89px',           // Increased from 69px for phone interface clearance
         'top-bar-height': designTokens.spacing.topBarHeight,
         'filter-bar-height': designTokens.spacing.filterBarHeight,
         
@@ -215,7 +215,7 @@ module.exports = {
 
       // 🖼️ Aspect ratios for event images
       aspectRatio: {
-        'event-banner': '2 / 1',    // 1200x600 event banners
+        'event-banner': '3 / 2',    // 1200x800 event banners (increased height)
         'event-thumb': '1 / 1',     // 400x400 thumbnails
         'card': '4 / 3',            // Standard card ratio
       },
@@ -345,7 +345,7 @@ module.exports = {
           backgroundColor: theme('colors.bg-secondary'),
           borderTop: `1px solid ${theme('colors.border-primary')}`,
           paddingTop: theme('spacing.sm'),
-          paddingBottom: theme('spacing.sm'),
+          paddingBottom: theme('spacing.xl'),     // Increased from sm to xl for phone interface clearance
           paddingLeft: theme('spacing.screen-padding'),
           paddingRight: theme('spacing.screen-padding'),
         },
