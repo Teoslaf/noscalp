@@ -194,8 +194,8 @@ export default function SearchPage() {
             </button>
 
             {/* Page Title */}
-            <h1 className="text-app-title font-bold text-text-primary">
-              Search
+            <h1 className="text-body font-bold text-text-primary">
+              Search Events
             </h1>
 
             {/* Spacer */}

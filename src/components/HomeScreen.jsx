@@ -99,7 +99,7 @@ const HomeScreen = () => {
         <div className="flex items-center justify-between h-full px-3">
           {/* App Name (Left) */}
           <h1 className="text-app-title font-bold text-text-primary">
-            Noscalp
+            noScalp
           </h1>
 
           {/* Settings Button (Right) */}

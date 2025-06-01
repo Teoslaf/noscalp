@@ -104,12 +104,6 @@ export default function SettingsPage() {
           onClick: () => window.open('#', '_blank')
         },
         {
-          name: 'ZK Proof Generator',
-          description: 'Generate zero-knowledge proofs with World ID',
-          type: 'link',
-          onClick: () => router.push('/zk-proof')
-        },
-        {
           name: 'Version',
           description: 'v1.0.0',
           type: 'info'
@@ -141,7 +135,7 @@ export default function SettingsPage() {
             </button>
 
             {/* Page Title */}
-            <h1 className="text-app-title font-bold text-text-primary">
+            <h1 className="text-body font-bold text-text-primary">
               Settings
             </h1>
 
