@@ -33,9 +33,18 @@ const EventCard = ({ event, onClick }) => {
   const ticketPrices = event.ticket_types.map(ticket => ticket.price);
   const minPrice = Math.min(...ticketPrices);
   const maxPrice = Math.max(...ticketPrices);
-  const priceDisplay = minPrice === maxPrice 
-    ? formatPrice(minPrice, event.currency)
-    : `${formatPrice(minPrice, event.currency)} - ${formatPrice(maxPrice, event.currency)}`;
+  
+  // Special handling for WLD currency to show "0 WLD" instead of "Free"
+  let priceDisplay;
+  if (event.currency === 'WLD' && minPrice === 0 && maxPrice === 0) {
+    priceDisplay = '0 WLD';
+  } else if (minPrice === 0 && maxPrice === 0) {
+    priceDisplay = 'Free';
+  } else if (minPrice === maxPrice) {
+    priceDisplay = formatPrice(minPrice, event.currency);
+  } else {
+    priceDisplay = `${formatPrice(minPrice, event.currency)} - ${formatPrice(maxPrice, event.currency)}`;
+  }
 
   // Check if event is online
   const isOnline = event.venue_or_online.startsWith('http');

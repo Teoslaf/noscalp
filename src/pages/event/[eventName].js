@@ -5,6 +5,7 @@ import Image from 'next/image'
 import eventsData from '../../data/events_prototype_no_imgs.json'
 import { getCategoryConfig, formatPrice } from '../../styles/design-tokens'
 import MarkdownRenderer from '../../components/MarkdownRenderer'
+import TicketPurchaseModal from '../../components/TicketPurchaseModal'
 
 export default function EventDetailPage() {
   const router = useRouter()
@@ -12,6 +13,7 @@ export default function EventDetailPage() {
   const [event, setEvent] = useState(null)
   const [selectedTicketType, setSelectedTicketType] = useState(null)
   const [isLiked, setIsLiked] = useState(false)
+  const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false)
 
   useEffect(() => {
     if (eventName) {
@@ -41,8 +43,26 @@ export default function EventDetailPage() {
   const availableTickets = totalTickets - soldTickets
 
   const handleBuyTicket = () => {
-    // Handle ticket purchase
-    alert(`Purchasing ${selectedTicketType.name} ticket for ${formatPrice(selectedTicketType.price, event.currency)}`)
+    console.log('🎫 Buy ticket button clicked!');
+    console.log('- selectedTicketType:', selectedTicketType);
+    console.log('- availableTickets:', availableTickets);
+    console.log('- totalTickets:', totalTickets);
+    console.log('- isPurchaseModalOpen:', isPurchaseModalOpen);
+    
+    if (!selectedTicketType) {
+      console.log('❌ No ticket type selected');
+      return;
+    }
+    
+    if (availableTickets === 0) {
+      console.log('❌ No tickets available');
+      return;
+    }
+    
+    console.log('✅ All conditions met, opening modal...');
+    // Open the purchase modal with the selected ticket type
+    setIsPurchaseModalOpen(true);
+    console.log('✅ Modal state set to true');
   }
 
   const handleContactOrganizer = () => {
@@ -240,7 +260,7 @@ export default function EventDetailPage() {
 
               {/* Ticket Types */}
               <div className="space-y-md">
-                {event.ticket_types.map((ticket, index) => (
+                {(event.ticket_types || []).map((ticket, index) => (
                   <div 
                     key={index}
                     className={`card-primary cursor-pointer transition-all duration-fast ${
@@ -271,11 +291,11 @@ export default function EventDetailPage() {
             </div>
 
             {/* Tags */}
-            {event.advanced_options.tags && event.advanced_options.tags.length > 0 && (
+            {event.advanced_options?.tags && event.advanced_options.tags.length > 0 && (
               <div className="space-y-lg">
                 <h3 className="text-body font-medium text-text-primary">Tags</h3>
                 <div className="flex flex-wrap gap-sm">
-                  {event.advanced_options.tags.map((tag, index) => (
+                  {(event.advanced_options.tags || []).map((tag, index) => (
                     <span
                       key={index}
                       className="px-md py-xs bg-bg-tertiary text-text-muted text-caption rounded-button"
@@ -305,6 +325,26 @@ export default function EventDetailPage() {
           </div>
         </div>
       </div>
+
+      {isPurchaseModalOpen && (
+        <TicketPurchaseModal
+          isOpen={isPurchaseModalOpen}
+          onClose={() => setIsPurchaseModalOpen(false)}
+          event={{
+            id: 1, // For demo purposes - in real app this would come from the event data
+            name: event.event_name,
+            currency: event.currency,
+            ticketTypes: (event.ticket_types || []).map((ticket, index) => ({
+              id: index,
+              name: ticket.name,
+              price: ticket.price,
+              maxSupply: ticket.quantity,
+              currentSupply: Math.floor(ticket.quantity * 0.3) // Simulated sold tickets
+            }))
+          }}
+          selectedTicketType={event.ticket_types ? event.ticket_types.findIndex(ticket => ticket.name === selectedTicketType?.name) : -1}
+        />
+      )}
     </>
   )
 } 

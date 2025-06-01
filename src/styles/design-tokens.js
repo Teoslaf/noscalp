@@ -417,6 +417,7 @@ export const designTokens = {
     JPY: { symbol: '¥', position: 'before' },
     AUD: { symbol: 'A$', position: 'before' },
     CZK: { symbol: 'Kč', position: 'after' },
+    WLD: { symbol: 'WLD', position: 'after' },
   },
 };
 

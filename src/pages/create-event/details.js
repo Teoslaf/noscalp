@@ -22,16 +22,26 @@ export default function CreateEventStep3() {
   ]
 
   useEffect(() => {
+    console.log('📝 Loading event data for details page...')
+    
     // Load event data from previous steps
-    const savedData = localStorage.getItem('createEventData')
+    const savedData = localStorage.getItem('eventCreationData')
     if (savedData) {
       const data = JSON.parse(savedData)
+      console.log('✅ Event data loaded:', data)
+      console.log('📊 Data structure check:')
+      console.log('  - eventName:', data.eventName || 'MISSING')
+      console.log('  - tickets:', data.tickets ? `${data.tickets.length} tickets` : 'MISSING')
+      console.log('  - existing details:', data.details ? 'Present' : 'None')
+      
       setEventData(data)
       // Load any existing details
       if (data.details) {
+        console.log('📋 Loading existing details:', data.details)
         setFormData(data.details)
       }
     } else {
+      console.warn('⚠️ No event creation data found, redirecting to start')
       // Redirect back to step 1 if no data
       router.push('/create-event')
     }
@@ -75,11 +85,25 @@ export default function CreateEventStep3() {
   }
 
   const handleNext = () => {
-    console.log('handleNext called');
-    console.log('formData:', formData);
+    console.log('➡️ Details handleNext called');
+    console.log('📊 Form data:', formData);
+    console.log('📊 Event data:', eventData);
     
-    // Temporary: Skip validation for debugging
-    console.log('Skipping validation for debugging...');
+    // Basic validation
+    if (!formData.description || !formData.description.trim()) {
+      alert('Please add an event description')
+      return
+    }
+    
+    if (!formData.date) {
+      alert('Please select an event date')
+      return
+    }
+    
+    if (!formData.location || !formData.location.trim()) {
+      alert('Please add an event location')
+      return
+    }
     
     setIsLoading(true)
 
@@ -88,12 +112,13 @@ export default function CreateEventStep3() {
       ...eventData,
       details: formData
     }
-    localStorage.setItem('createEventData', JSON.stringify(updatedEventData))
-    console.log('Data saved, navigating...');
+    
+    console.log('💾 Saving complete event data:', updatedEventData)
+    localStorage.setItem('eventCreationData', JSON.stringify(updatedEventData))
 
     // Navigate to verification step after a short delay
     setTimeout(() => {
-      console.log('Navigating to verify page...');
+      console.log('🔍 Navigating to verify page...');
       setIsLoading(false)
       router.push('/create-event/verify')
     }, 500)
@@ -106,7 +131,7 @@ export default function CreateEventStep3() {
         ...eventData,
         details: formData
       }
-      localStorage.setItem('createEventData', JSON.stringify(updatedEventData))
+      localStorage.setItem('eventCreationData', JSON.stringify(updatedEventData))
     }
     router.push('/create-event/tickets')
   }

@@ -7,21 +7,30 @@ export default function CreateEventStep1() {
   const router = useRouter()
   const [eventName, setEventName] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const handleNext = () => {
     if (!eventName.trim()) {
-      alert('Please enter an event name')
+      setError('Event name is required')
       return
     }
 
     setIsLoading(true)
-    
-    // Store the event name in localStorage for the multi-step form
-    const eventData = { eventName: eventName.trim() }
-    localStorage.setItem('createEventData', JSON.stringify(eventData))
-    
-    // Navigate to next step
-    router.push('/create-event/tickets')
+    setError('')
+
+    // Simulate API call for creating event
+    setTimeout(() => {
+      const eventData = {
+        eventName: eventName.trim(),
+        createdAt: new Date().toISOString()
+      }
+      
+      // Store in localStorage for next step
+      localStorage.setItem('eventCreationData', JSON.stringify(eventData))
+      
+      setIsLoading(false)
+      router.push('/create-event/tickets')
+    }, 1000)
   }
 
   return (
@@ -98,7 +107,7 @@ export default function CreateEventStep1() {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g., Tech Conference 2024, Art Workshop, Music Festival"
+                    placeholder="Enter your event name"
                     value={eventName}
                     onChange={(e) => setEventName(e.target.value)}
                     className="input-primary w-full"
@@ -112,27 +121,6 @@ export default function CreateEventStep1() {
                     <span className="text-small text-text-muted">
                       {eventName.length}/100
                     </span>
-                  </div>
-                </div>
-
-                {/* Example Names */}
-                <div className="space-y-sm">
-                  <p className="text-caption text-text-secondary">Popular examples:</p>
-                  <div className="flex flex-wrap gap-sm">
-                    {[
-                      'Web3 Summit Prague',
-                      'Startup Networking Night', 
-                      'Digital Art Exhibition',
-                      'Blockchain Hackathon'
-                    ].map((example, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setEventName(example)}
-                        className="px-md py-xs bg-bg-tertiary hover:bg-border-primary text-text-secondary text-caption rounded-button transition-colors duration-fast"
-                      >
-                        {example}
-                      </button>
-                    ))}
                   </div>
                 </div>
               </div>

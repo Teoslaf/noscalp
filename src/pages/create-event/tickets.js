@@ -11,12 +11,17 @@ export default function CreateEventStep2() {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    // Load event data from previous step
-    const savedData = localStorage.getItem('createEventData')
+    // Load event data from previous steps
+    const savedData = localStorage.getItem('eventCreationData')
     if (savedData) {
-      setEventData(JSON.parse(savedData))
+      const data = JSON.parse(savedData)
+      setEventData(data)
+      // Initialize tickets if they exist
+      if (data.tickets) {
+        setTickets(data.tickets)
+      }
     } else {
-      // Redirect back to step 1 if no data
+      // Redirect back if no event data
       router.push('/create-event')
     }
   }, [router])
@@ -45,26 +50,30 @@ export default function CreateEventStep2() {
   }
 
   const handleNext = () => {
+    console.log('🎫 Validating tickets before proceeding...')
+    console.log('📊 Current tickets:', tickets)
+    
     // Validate tickets
     const validTickets = tickets.filter(ticket => 
-      ticket.name.trim() && ticket.quantity > 0 && ticket.price >= 0
+      ticket.name && ticket.name.trim() && ticket.quantity > 0 && ticket.price >= 0
     )
-
+    
+    console.log('✅ Valid tickets:', validTickets)
+    
     if (validTickets.length === 0) {
-      alert('Please add at least one valid ticket type')
+      alert('Please add at least one valid ticket type with a name and quantity')
       return
     }
 
-    setIsLoading(true)
-
-    // Update event data with tickets
+    // Update event data with validated tickets
     const updatedEventData = {
       ...eventData,
       tickets: validTickets
     }
-    localStorage.setItem('createEventData', JSON.stringify(updatedEventData))
-
-    // Navigate to next step
+    
+    console.log('💾 Saving event data:', updatedEventData)
+    localStorage.setItem('eventCreationData', JSON.stringify(updatedEventData))
+    
     router.push('/create-event/details')
   }
 
@@ -219,6 +228,7 @@ export default function CreateEventStep2() {
                         <option value="GBP">GBP</option>
                         <option value="CZK">CZK</option>
                         <option value="ETH">ETH</option>
+                        <option value="WLD">WLD</option>
                       </select>
                     </div>
                   </div>

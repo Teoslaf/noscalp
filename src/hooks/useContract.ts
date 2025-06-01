@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { contractService, TransactionResult, GasEstimate } from '@/services/contractService';
+import { contractService, TransactionResult } from '@/services/contractService';
 import { 
   EventData, 
   TicketTypeData, 
@@ -44,15 +44,6 @@ export function useContract() {
 
 export function useEventCreation() {
   const { isLoading, error, executeWithLoading, clearError } = useContract();
-  const [gasEstimate, setGasEstimate] = useState<GasEstimate | null>(null);
-
-  const estimateEventCreationGas = useCallback(async (eventName: string) => {
-    const estimate = await executeWithLoading(() => 
-      contractService.estimateGas('createEvent', [eventName])
-    );
-    setGasEstimate(estimate);
-    return estimate;
-  }, [executeWithLoading]);
 
   const createEvent = useCallback(async (params: CreateEventParams): Promise<TransactionResult | null> => {
     return executeWithLoading(() => contractService.createEvent(params));
@@ -65,8 +56,6 @@ export function useEventCreation() {
   return {
     isLoading,
     error,
-    gasEstimate,
-    estimateEventCreationGas,
     createEvent,
     createTicketType,
     clearError
@@ -77,28 +66,6 @@ export function useEventCreation() {
 
 export function useTicketPurchase() {
   const { isLoading, error, executeWithLoading, clearError } = useContract();
-  const [gasEstimate, setGasEstimate] = useState<GasEstimate | null>(null);
-
-  const estimateTicketPurchaseGas = useCallback(async (
-    params: PurchaseTicketParams, 
-    ticketPrice: string
-  ) => {
-    const priceInWei = parseEther(ticketPrice);
-    const args = [
-      params.eventId,
-      params.ticketTypeIndex,
-      params.signal,
-      params.root,
-      params.nullifierHash,
-      params.proof
-    ];
-    
-    const estimate = await executeWithLoading(() => 
-      contractService.estimateGas('purchaseTicket', args, priceInWei)
-    );
-    setGasEstimate(estimate);
-    return estimate;
-  }, [executeWithLoading]);
 
   const purchaseTicket = useCallback(async (
     params: PurchaseTicketParams,
@@ -111,8 +78,6 @@ export function useTicketPurchase() {
   return {
     isLoading,
     error,
-    gasEstimate,
-    estimateTicketPurchaseGas,
     purchaseTicket,
     clearError
   };

@@ -70,12 +70,7 @@ export const AuthButton = () => {
         requestId: '0', // Optional
         expirationTime: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000), // 7 days
         notBefore: new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // 24 hours ago
-        statement: 'Sign in to Noscalp - Discover amazing events with verified identity',
-        // Add these for better SIWE compatibility
-        chainId: 1, // Ethereum mainnet
-        domain: window.location.host,
-        uri: window.location.origin,
-        version: '1'
+        statement: 'Sign in to Noscalp - Discover amazing events with verified identity'
       });
 
       console.log('📋 MiniKit wallet auth result:', result);

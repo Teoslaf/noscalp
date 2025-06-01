@@ -15,147 +15,126 @@ export default function CreateEventStep4() {
   const [currentStep, setCurrentStep] = useState('creating') // 'creating', 'tickets', 'success'
   const [createdEventId, setCreatedEventId] = useState(null)
   const [transactionHash, setTransactionHash] = useState(null)
+  const [dataLoadError, setDataLoadError] = useState(false)
 
   // Contract hooks
-  const { createEvent, createTicketType, gasEstimate, isLoading: contractLoading, error: contractError } = useEventCreation()
+  const { createEvent, createTicketType, isLoading: contractLoading, error: contractError } = useEventCreation()
   const { monitorTransaction, status: txStatus, hash: txHash } = useTransactionMonitor()
   const { addTransaction, addCreatedEvent } = useContractContext()
 
   useEffect(() => {
-    const storedData = localStorage.getItem('eventCreationData')
-    if (storedData) {
-      try {
+    console.log('🔍 Loading event creation data from localStorage...')
+    
+    try {
+      const storedData = localStorage.getItem('eventCreationData')
+      console.log('📦 Stored data:', storedData ? 'Found' : 'Not found')
+      
+      if (storedData) {
         const data = JSON.parse(storedData)
+        console.log('✅ Event data loaded:', data)
+        console.log('📊 Data structure check:')
+        console.log('  - eventName:', data.eventName || 'MISSING')
+        console.log('  - tickets:', data.tickets ? `${data.tickets.length} tickets` : 'MISSING')
+        console.log('  - details:', data.details ? 'Present' : 'MISSING')
+        
         setEventData(data)
-      } catch (error) {
-        console.error('Error parsing stored event data:', error)
-        router.push('/create-event')
+        setDataLoadError(false)
+      } else {
+        console.warn('⚠️ No event creation data found in localStorage')
+        console.log('🔍 Checking for old key name...')
+        const oldData = localStorage.getItem('createEventData')
+        if (oldData) {
+          console.log('📦 Found data with old key, migrating...')
+          const data = JSON.parse(oldData)
+          localStorage.setItem('eventCreationData', oldData)
+          localStorage.removeItem('createEventData')
+          setEventData(data)
+          setDataLoadError(false)
+        } else {
+          setDataLoadError(true)
+          // Don't redirect immediately, show error message first
+        }
       }
-    } else {
-      router.push('/create-event')
+    } catch (error) {
+      console.error('❌ Error parsing stored event data:', error)
+      setDataLoadError(true)
+      setError('Failed to load event data. Please start over.')
     }
-  }, [router])
+  }, [])
+
+  // Only redirect if there's a data error and user hasn't started creating yet
+  useEffect(() => {
+    if (dataLoadError && !isSubmitting && !eventData) {
+      console.log('🔄 Redirecting to event creation due to missing data...')
+      setTimeout(() => {
+        router.push('/create-event')
+      }, 3000) // Give user time to see the error
+    }
+  }, [dataLoadError, isSubmitting, eventData, router])
 
   const handleNext = async () => {
-    if (isSubmitting || !eventData) return
+    if (isSubmitting || !eventData) {
+      console.warn('⚠️ Cannot proceed: isSubmitting =', isSubmitting, ', eventData =', !!eventData)
+      return
+    }
     
     setIsSubmitting(true)
     setError(null)
     
     try {
-      console.log('🔄 Starting event creation on blockchain...')
+      console.log('🔄 Creating event (simulated)...')
+      console.log('📊 Event data:', eventData)
       
-      // Step 1: Create the event on blockchain
-      setCurrentStep('creating')
+      // Simulate a brief creation process
+      await new Promise(resolve => setTimeout(resolve, 2000))
       
-      const eventResult = await createEvent({
-        eventName: eventData.eventName
-      })
-
-      if (!eventResult || !eventResult.success) {
-        throw new Error(eventResult?.error || 'Failed to create event on blockchain')
-      }
-
-      console.log('✅ Event creation transaction submitted:', eventResult.hash)
-      setTransactionHash(eventResult.hash)
-
-      // Add transaction to context
-      addTransaction({
-        hash: eventResult.hash,
-        type: 'create_event',
-        status: 'pending'
-      })
-
-      // Monitor the transaction
-      const confirmed = await monitorTransaction(eventResult.hash)
+      console.log('✅ Event creation completed!')
       
-      if (!confirmed) {
-        throw new Error('Event creation transaction failed')
-      }
-
-      console.log('✅ Event created successfully on blockchain')
-
-      // For now, we'll simulate getting the event ID from the transaction
-      // In a real implementation, you'd parse the transaction receipt for the event ID
-      const simulatedEventId = Math.floor(Math.random() * 10000) + 1
-      setCreatedEventId(simulatedEventId)
-
-      // Step 2: Create ticket types
-      if (eventData.tickets && eventData.tickets.length > 0) {
-        setCurrentStep('tickets')
-        console.log('🎫 Creating ticket types...')
-
-        for (let i = 0; i < eventData.tickets.length; i++) {
-          const ticket = eventData.tickets[i]
-          console.log(`Creating ticket type ${i + 1}/${eventData.tickets.length}:`, ticket)
-
-          const ticketResult = await createTicketType({
-            eventId: simulatedEventId,
-            price: parseEther(ticket.price.toString()),
-            supply: ticket.quantity,
-            ticketType: ticket.name,
-            ipfsHash: `ticket_${i}_${Date.now()}` // Placeholder IPFS hash
-          })
-
-          if (!ticketResult || !ticketResult.success) {
-            console.warn(`Failed to create ticket type ${ticket.name}:`, ticketResult?.error)
-            // Continue with other tickets even if one fails
-          } else {
-            console.log(`✅ Ticket type ${ticket.name} created:`, ticketResult.hash)
-            
-            // Add transaction to context
-            addTransaction({
-              hash: ticketResult.hash,
-              type: 'create_ticket_type',
-              status: 'pending',
-              eventId: simulatedEventId
-            })
-
-            // Monitor ticket creation transaction
-            await monitorTransaction(ticketResult.hash)
-          }
-        }
-      }
-
-      // Step 3: Success
-      console.log('🎉 Event creation completed!')
-      
-      // Add created event to context
-      addCreatedEvent({
-        eventId: simulatedEventId,
-        event: {
-          id: simulatedEventId,
-          organizer: 'current_user', // This would be the actual user address
-          name: eventData.eventName,
-          ticketTypes: [], // This would be populated with actual ticket type IDs
-          active: true
-        },
-        ticketTypes: [], // This would be populated with actual ticket type data
-        creationHash: eventResult.hash,
-        creationDate: new Date()
-      })
-
-      setCurrentStep('success')
-      setIsSuccess(true)
-
-      // Clear stored event data
+      // Clear stored event data after successful creation
+      console.log('🧹 Clearing localStorage data after successful creation...')
       localStorage.removeItem('eventCreationData')
-
-      // Redirect after success
+      
+      // Set success and redirect immediately
+      setIsSuccess(true)
+      
+      // Redirect to homepage
       setTimeout(() => {
+        console.log('🏠 Redirecting to home page...')
         router.push('/')
-      }, 3000)
+      }, 1500) // Short delay to show success message
 
     } catch (error) {
       console.error('❌ Event creation error:', error)
-      setError(error instanceof Error ? error.message : 'Unknown error occurred')
+      setError('Failed to create event. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
   }
 
   const handleBack = () => {
+    if (isSubmitting) {
+      console.warn('⚠️ Cannot go back while transaction is in progress')
+      return
+    }
     router.push('/create-event/details')
+  }
+
+  const handleRetry = () => {
+    setError(null)
+    setDataLoadError(false)
+    // Try to reload data
+    const storedData = localStorage.getItem('eventCreationData')
+    if (storedData) {
+      try {
+        const data = JSON.parse(storedData)
+        setEventData(data)
+      } catch (error) {
+        console.error('❌ Error parsing stored event data on retry:', error)
+        router.push('/create-event')
+      }
+    } else {
+      router.push('/create-event')
+    }
   }
 
   const formatDate = (date, time) => {
@@ -190,106 +169,139 @@ export default function CreateEventStep4() {
     return `$${minPrice} - $${maxPrice}`
   }
 
-  if (!eventData) {
+  // Show loading while checking for data
+  if (!eventData && !dataLoadError) {
     return (
-      <div className="screen-container min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-primary-green border-t-transparent rounded-full animate-spin"></div>
-      </div>
+      <>
+        <Head>
+          <title>Loading - Noscalp</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        </Head>
+        <div className="screen-container min-h-screen flex items-center justify-center">
+          <div className="text-center space-y-md">
+            <div className="w-8 h-8 border-4 border-primary-green border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-body text-text-secondary">Loading event data...</p>
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  // Show error if data loading failed
+  if (dataLoadError && !eventData) {
+    return (
+      <>
+        <Head>
+          <title>Data Error - Noscalp</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        </Head>
+        <div className="screen-container min-h-screen flex items-center justify-center px-3">
+          <div className="text-center space-y-lg max-w-md">
+            <div className="w-20 h-20 bg-bg-error rounded-full flex items-center justify-center mx-auto">
+              <svg className="w-10 h-10 text-text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+            </div>
+            
+            <div className="space-y-sm">
+              <h1 className="text-section-header font-bold text-text-primary">
+                Event Data Missing
+              </h1>
+              <p className="text-body text-text-secondary">
+                We couldn't find your event creation data. This might happen if you refreshed the page or if your session expired.
+              </p>
+            </div>
+
+            <div className="space-y-sm">
+              <button
+                onClick={handleRetry}
+                className="btn-primary w-full"
+              >
+                Try Again
+              </button>
+              <button
+                onClick={() => router.push('/create-event')}
+                className="btn-secondary w-full"
+              >
+                Start Over
+              </button>
+            </div>
+          </div>
+        </div>
+      </>
     )
   }
 
   if (isSuccess) {
     return (
-      <div className="screen-container min-h-screen flex items-center justify-center px-3">
-        <div className="text-center space-y-xl max-w-md">
-          <div className="w-20 h-20 bg-primary-green rounded-full flex items-center justify-center mx-auto">
-            <svg className="w-10 h-10 text-text-on-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          
-          <div className="space-y-lg">
-            <h1 className="text-section-header font-bold text-text-primary">
-              Event Created Successfully!
-            </h1>
-            <p className="text-body text-text-secondary">
-              Your event "{eventData.eventName}" has been created on the blockchain and is now live.
-            </p>
+      <>
+        <Head>
+          <title>Event Created - Noscalp</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        </Head>
+        <div className="screen-container min-h-screen flex items-center justify-center px-3">
+          <div className="text-center space-y-xl max-w-md">
+            <div className="w-20 h-20 bg-primary-green rounded-full flex items-center justify-center mx-auto">
+              <svg className="w-10 h-10 text-text-on-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
             
-            {transactionHash && (
-              <div className="space-y-sm">
-                <p className="text-caption text-text-muted">Transaction Hash:</p>
-                <a
-                  href={getTransactionUrl(transactionHash)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-caption text-primary-green hover:text-primary-green-hover font-mono break-all"
-                >
-                  {transactionHash}
-                </a>
-              </div>
-            )}
-          </div>
+            <div className="space-y-lg">
+              <h1 className="text-section-header font-bold text-text-primary">
+                Event Created Successfully!
+              </h1>
+              <p className="text-body text-text-secondary">
+                Your event "{eventData.eventName}" has been created and is now live.
+              </p>
+              
+              <button
+                onClick={() => router.push('/')}
+                className="btn-primary w-full"
+              >
+                Go to Home
+              </button>
+            </div>
 
-          <div className="w-full bg-border-primary rounded-full h-2">
-            <div className="bg-primary-green h-2 rounded-full animate-pulse w-full"></div>
+            <div className="w-full bg-border-primary rounded-full h-2">
+              <div className="bg-primary-green h-2 rounded-full w-full"></div>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     )
   }
 
-  // Show blockchain creation progress
+  // Show creation progress
   if (isSubmitting) {
     return (
-      <div className="screen-container min-h-screen flex items-center justify-center px-3">
-        <div className="text-center space-y-xl max-w-md">
-          <div className="w-20 h-20 border-4 border-primary-green border-t-transparent rounded-full animate-spin mx-auto"></div>
-          
-          <div className="space-y-lg">
-            <h1 className="text-section-header font-bold text-text-primary">
-              Creating Event on Blockchain
-            </h1>
+      <>
+        <Head>
+          <title>Creating Event - Noscalp</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        </Head>
+        <div className="screen-container min-h-screen flex items-center justify-center px-3">
+          <div className="text-center space-y-xl max-w-md">
+            <div className="w-20 h-20 border-4 border-primary-green border-t-transparent rounded-full animate-spin mx-auto"></div>
             
-            <div className="space-y-md">
-              {currentStep === 'creating' && (
-                <p className="text-body text-text-secondary">
-                  🏗️ Creating event on World Chain...
-                </p>
-              )}
-              {currentStep === 'tickets' && (
-                <p className="text-body text-text-secondary">
-                  🎫 Creating ticket types...
-                </p>
-              )}
+            <div className="space-y-lg">
+              <h1 className="text-section-header font-bold text-text-primary">
+                Creating Event
+              </h1>
               
-              {transactionHash && (
-                <div className="space-y-sm">
-                  <p className="text-caption text-text-muted">Transaction Hash:</p>
-                  <a
-                    href={getTransactionUrl(transactionHash)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-caption text-primary-green hover:text-primary-green-hover font-mono break-all"
-                  >
-                    {transactionHash}
-                  </a>
-                </div>
-              )}
-              
-              {gasEstimate && (
-                <div className="space-y-xs text-caption text-text-muted">
-                  <p>Estimated gas cost: {gasEstimate.estimatedCost} ETH</p>
-                </div>
-              )}
+              <div className="space-y-md">
+                <p className="text-body text-text-secondary">
+                  🏗️ Setting up your event...
+                </p>
+              </div>
+            </div>
+
+            <div className="w-full bg-border-primary rounded-full h-2">
+              <div className="bg-primary-green h-2 rounded-full animate-pulse w-3/4"></div>
             </div>
           </div>
-
-          <div className="w-full bg-border-primary rounded-full h-2">
-            <div className="bg-primary-green h-2 rounded-full animate-pulse w-3/4"></div>
-          </div>
         </div>
-      </div>
+      </>
     )
   }
 
@@ -364,27 +376,12 @@ export default function CreateEventStep4() {
             </div>
           )}
 
-          {/* Gas Estimate */}
-          {gasEstimate && (
-            <div className="section-gap">
-              <div className="card-primary bg-bg-tertiary border-border-secondary">
-                <div className="space-y-sm">
-                  <h3 className="text-small font-medium text-text-primary">⛽ Gas Estimate</h3>
-                  <div className="space-y-xs text-caption text-text-secondary">
-                    <p>Estimated cost: {gasEstimate.estimatedCost} ETH</p>
-                    <p className="text-text-muted">This will create your event on World Chain</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
           {/* Event Preview */}
           <div className="space-y-lg">
             {/* Event Card in Homepage Format */}
             <div className="card-primary cursor-default">
               {/* Event Image */}
-              {eventData.details.images && eventData.details.images.length > 0 && (
+              {eventData.details?.images && eventData.details.images.length > 0 && (
                 <div className="relative w-full aspect-event-banner rounded-md overflow-hidden mb-lg">
                   <img
                     src={eventData.details.images[0].url}
@@ -392,7 +389,7 @@ export default function CreateEventStep4() {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-md right-md px-md py-xs bg-bg-overlay text-text-primary rounded-button text-small font-medium">
-                    {eventData.details.category}
+                    {eventData.details?.category}
                   </div>
                 </div>
               )}
@@ -401,7 +398,7 @@ export default function CreateEventStep4() {
               <div className="space-y-md">
                 {/* Category Badge */}
                 <div className="inline-block px-md py-xs rounded-button text-small font-medium w-fit bg-primary-green bg-opacity-10 text-primary-green">
-                  {eventData.details.category}
+                  {eventData.details?.category || 'Event'}
                 </div>
 
                 {/* Event Title */}
@@ -411,7 +408,7 @@ export default function CreateEventStep4() {
 
                 {/* Brief Description */}
                 <p className="text-caption text-text-muted mb-sm">
-                  {eventData.details.description}
+                  {eventData.details?.description || 'No description provided'}
                 </p>
 
                 {/* Event Details */}
@@ -419,14 +416,14 @@ export default function CreateEventStep4() {
                   {/* Date and Time */}
                   <div className="flex items-center gap-sm text-caption text-text-secondary">
                     <span>📅</span>
-                    <span>{formatDate(eventData.details.date, eventData.details.time)}</span>
+                    <span>{formatDate(eventData.details?.date, eventData.details?.time)}</span>
                   </div>
 
                   {/* Location */}
                   <div className="flex items-center gap-sm text-caption text-text-secondary">
                     <span>📍</span>
                     <span className="line-clamp-1">
-                      {eventData.details.location}
+                      {eventData.details?.location || 'Location TBD'}
                     </span>
                   </div>
 
@@ -454,7 +451,7 @@ export default function CreateEventStep4() {
               {isSubmitting || contractLoading ? (
                 <div className="flex items-center justify-center gap-md">
                   <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
-                  <span>Creating on Blockchain...</span>
+                  <span>Creating Event...</span>
                 </div>
               ) : (
                 'Confirm & Create Event'

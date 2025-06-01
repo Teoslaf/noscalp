@@ -10,7 +10,7 @@
     "ticket_types": [
       {
         "type": "Early Bird",
-        "price": 114,
+        "price": 0,
         "quantity": 89,
         "benefits": [
           "Access to all sessions",
@@ -19,14 +19,14 @@
       },
       {
         "type": "Regular",
-        "price": 129,
+        "price": 0,
         "quantity": 231,
         "benefits": [
           "Access to all sessions"
         ]
       }
     ],
-    "currency": "EUR",
+    "currency": "WLD",
     "organizer": {
       "name": "Acme Events",
       "email": "contact@acmeevents.com",

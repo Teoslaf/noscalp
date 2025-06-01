@@ -16,12 +16,6 @@ export interface TransactionResult {
   error?: string;
 }
 
-export interface GasEstimate {
-  gasLimit: bigint;
-  gasPrice: bigint;
-  estimatedCost: string; // in ETH
-}
-
 export class ContractService {
   private publicClient;
   private walletClient: any = null;
@@ -87,41 +81,6 @@ export class ContractService {
     }
   }
 
-  /**
-   * Estimate gas for a transaction
-   */
-  async estimateGas(
-    functionName: string,
-    args: any[],
-    value: bigint = 0n
-  ): Promise<GasEstimate | null> {
-    try {
-      const account = await this.getAccount();
-      if (!account) throw new Error('No account connected');
-
-      const gasLimit = await this.publicClient.estimateContractGas({
-        address: this.contractAddress as `0x${string}`,
-        abi: EVENT_CONTRACT_ABI,
-        functionName,
-        args,
-        value,
-        account: account as `0x${string}`
-      });
-
-      const gasPrice = await this.publicClient.getGasPrice();
-      const estimatedCost = formatEther(gasLimit * gasPrice);
-
-      return {
-        gasLimit,
-        gasPrice,
-        estimatedCost
-      };
-    } catch (error) {
-      console.error('❌ Gas estimation error:', error);
-      return null;
-    }
-  }
-
   // ===== EVENT CREATION =====
 
   /**
@@ -134,26 +93,18 @@ export class ContractService {
       const account = await this.getAccount();
       if (!account) throw new Error('No account connected');
 
-      // Estimate gas first
-      const gasEstimate = await this.estimateGas('createEvent', [params.eventName]);
-      if (!gasEstimate) throw new Error('Failed to estimate gas');
-
-      console.log('⛽ Gas estimate:', gasEstimate);
-
       if (MiniKit.isInstalled()) {
         // For World App - use MiniKit transaction
         // Note: This is a placeholder - actual implementation may vary
         throw new Error('World App transaction not yet implemented for event creation');
       }
 
-      // For external wallets
+      // For external wallets - no gas needed on World Chain
       const hash = await this.walletClient.writeContract({
         address: this.contractAddress as `0x${string}`,
         abi: EVENT_CONTRACT_ABI,
         functionName: 'createEvent',
-        args: [params.eventName],
-        gas: gasEstimate.gasLimit,
-        gasPrice: gasEstimate.gasPrice
+        args: [params.eventName]
       });
 
       console.log('✅ Event creation transaction submitted:', hash);
@@ -187,9 +138,6 @@ export class ContractService {
         params.ipfsHash
       ];
 
-      const gasEstimate = await this.estimateGas('createTicketType', args);
-      if (!gasEstimate) throw new Error('Failed to estimate gas');
-
       if (MiniKit.isInstalled()) {
         throw new Error('World App transaction not yet implemented for ticket type creation');
       }
@@ -198,9 +146,7 @@ export class ContractService {
         address: this.contractAddress as `0x${string}`,
         abi: EVENT_CONTRACT_ABI,
         functionName: 'createTicketType',
-        args,
-        gas: gasEstimate.gasLimit,
-        gasPrice: gasEstimate.gasPrice
+        args
       });
 
       console.log('✅ Ticket type creation transaction submitted:', hash);
@@ -240,10 +186,6 @@ export class ContractService {
         params.proof
       ];
 
-      const gasEstimate = await this.estimateGas('purchaseTicket', args, ticketPrice);
-      if (!gasEstimate) throw new Error('Failed to estimate gas');
-
-      console.log('⛽ Gas estimate for ticket purchase:', gasEstimate);
       console.log('💰 Ticket price:', formatEther(ticketPrice), 'ETH');
 
       if (MiniKit.isInstalled()) {
@@ -255,9 +197,7 @@ export class ContractService {
         abi: EVENT_CONTRACT_ABI,
         functionName: 'purchaseTicket',
         args,
-        value: ticketPrice,
-        gas: gasEstimate.gasLimit,
-        gasPrice: gasEstimate.gasPrice
+        value: ticketPrice
       });
 
       console.log('✅ Ticket purchase transaction submitted:', hash);
@@ -394,9 +334,6 @@ export class ContractService {
       const account = await this.getAccount();
       if (!account) throw new Error('No account connected');
 
-      const gasEstimate = await this.estimateGas('toggleEventStatus', [eventId]);
-      if (!gasEstimate) throw new Error('Failed to estimate gas');
-
       if (MiniKit.isInstalled()) {
         throw new Error('World App transaction not yet implemented for event management');
       }
@@ -405,9 +342,7 @@ export class ContractService {
         address: this.contractAddress as `0x${string}`,
         abi: EVENT_CONTRACT_ABI,
         functionName: 'toggleEventStatus',
-        args: [eventId],
-        gas: gasEstimate.gasLimit,
-        gasPrice: gasEstimate.gasPrice
+        args: [eventId]
       });
 
       return { hash, success: true };

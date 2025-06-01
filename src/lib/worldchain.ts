@@ -68,7 +68,7 @@ export const worldchainSepolia = defineChain({
 // Smart contract addresses for World Chain
 export const WORLD_CHAIN_CONTRACTS = {
   // Your specific smart contract
-  TARGET_CONTRACT: '0x9042DeCea10fa8E11d192A806F72c4c6a54eEF43',
+  TARGET_CONTRACT: '0x2cFc85d8E48F8EAB294be644d9E25C3030863003',
   
   // World ID Router (if deployed on World Chain)
   WORLD_ID_ROUTER: '0x163b09b4fE21177c455D850BD815B6D583732432', // Replace with actual address
@@ -76,10 +76,6 @@ export const WORLD_CHAIN_CONTRACTS = {
 
 // Contract configuration
 export const CONTRACT_CONFIG = {
-  // Gas settings
-  GAS_LIMIT_MULTIPLIER: 1.2, // Add 20% buffer to gas estimates
-  MAX_GAS_PRICE: '20', // 20 gwei max
-  
   // Timeouts
   TRANSACTION_TIMEOUT: 60000, // 60 seconds
   CONFIRMATION_BLOCKS: 1, // Number of confirmations to wait for
@@ -97,10 +93,10 @@ export const CONTRACT_CONFIG = {
 } as const;
 
 // Default World ID action for the smart contract
-export const DEFAULT_ACTION = 'verify_human';
+export const DEFAULT_ACTION = 'verify';
 
 // Test action for troubleshooting
-export const TEST_ACTION = 'test_verification';
+export const TEST_ACTION = 'test-verification';
 
 // Helper function to get the correct chain based on environment
 export function getWorldChain() {
@@ -132,12 +128,6 @@ export function getTransactionUrl(txHash: string, testnet: boolean = false): str
 export function getAddressUrl(address: string, testnet: boolean = false): string {
   const chain = testnet ? worldchainSepolia : worldchain;
   return `${chain.blockExplorers.default.url}/address/${address}`;
-}
-
-// Helper function to format gas price for display
-export function formatGasPrice(gasPrice: bigint): string {
-  const gwei = Number(gasPrice) / 1e9;
-  return `${gwei.toFixed(2)} gwei`;
 }
 
 // Helper function to check if we're in development mode
