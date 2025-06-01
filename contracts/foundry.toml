@@ -1,0 +1,12 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+
+[rpc_endpoints]
+world = "${WORLD_RPC_URL}"
+
+[etherscan]
+world = { key = "${ETHERSCAN_API_KEY}", url = "https://explorer.world" }
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
